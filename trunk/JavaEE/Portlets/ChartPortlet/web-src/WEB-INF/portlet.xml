@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app version="1.0"
+	xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
+	<portlet>
+		<description xml:lang="EN">A simple chart portlet</description>
+		<portlet-name>ChartPortlet</portlet-name>
+		<display-name xml:lang="EN">ChartPortlet</display-name>
+		<portlet-class>
+			com.sun.portal.os.portlets.ChartPortlet
+		</portlet-class>
+
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+			<portlet-mode>HELP</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<resource-bundle>portlet</resource-bundle>
+
+		<portlet-info>
+			<title>ChartPortlet</title>
+			<short-title>ChartPortlet</short-title>
+			<keywords>ChartPortlet</keywords>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>JDBC_DRIVER_URL</name>
+				<value>
+					jdbc:mysql://localhost/chart?user=chart&amp;password=chart
+				</value>
+			</preference>
+			<preference>
+				<name>JDBC_DRIVER_CLASS</name>
+				<value>com.mysql.jdbc.Driver</value>
+			</preference>
+
+			<preference>
+				<name>PIE_CHART_SQL</name>
+				<value>
+					SELECT product_category, bug_count FROM piechart
+				</value>
+			</preference>
+
+			<preference>
+				<name>BAR_CHART_SQL</name>
+				<value>
+					SELECT category, series1 , series2 , series3 FROM barchart
+				</value>
+			</preference>
+
+			<preference>
+				<name>TIME_SERIES_SQL</name>
+				<value>
+					SELECT date, series1 , series2 , series3 FROM timeseries
+				</value>
+			</preference>
+
+
+		</portlet-preferences>
+	</portlet>
+
+</portlet-app>
