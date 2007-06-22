@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Chart Portlet Using JFreeChart</title>
+<style type="text/css">
+<!--
+h3 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #660000;
+}
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+h2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 24px;
+	color: #000033;
+	text-decoration: underline;
+}
+pre {
+	font-family: "Courier New", Courier, monospace;
+	font-size: 12px;
+	color: #0033CC;
+}
+-->
+</style>
+</head>
+
+<body>
+<h2 align="center">Chart Portlet Using JFreeChart</h2>
+<p align="right">- Sandeep Soni</p>
+<p align="center">&nbsp;</p>
+<h3>Summary</h3>
+<p>This is a sample portlet that shows how to generate charts using the <a href="http://www.jfree.org/jfreechart/">JFreeChart</a> library. JFreeChart is  an open-source graphing and charting library. I have written an <a href="http://developers.sun.com/portalserver/reference/techart/jfreechart.html">article</a> on Sun Developer Network that talks in brief detail on how to develop a portlet using this library. </p>
+<p>This sample portlet here is an extension to that article. It shows how you can read data from a database and create dynamic charts from that data. The difference between this portlet and the one which the article talks about is that in this portlet the chart is generated dynamically and not saved in any temporary location. In addition to this, the current portlet also allows the user to select the type of chart he wants to generate and then dynamically fetches the data from the database ( based on the SQL that the user specifies ) and renders the chart.</p>
+<h3>Installation</h3>
+<p>This portlet has been tested on <a href="http://portals.apache.org/jetspeed-2/">JetSpeed 2.x</a> final release. The portlet specifically uses the scheme in which variables between the PortletSession and HttpSession are shared and hence requires the container hosting the portlet apps to support sharing session cross context. Tomcat ( which the default JetSpeed installation uses ) supports this feature and hence this portlet works fine on JetSpeed 2.0</p>
+<ul>
+  <li>For setting up this portlet to work on JetSpeed 2.0 follow the steps:
+    <ol>
+      <li>Install and setup JetSpeed as per its installation instructions.</li>
+      <li>Locate the server.xml file under &lt;JetSpeecInstallHome&gt;/conf
+        <ul>
+          <li>Locate the two &lt;Connector&gt; elements in this file. For each of these &lt;Connector&gt; elements add the attribute emptySessionPath=&quot;true</li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<ul>
+  <li>This portlet uses a database to fetch its data. Click here to see the <a href="schema.html">schema</a> of the sample database tables. In the Portlet Application I have put up a <a href="#db-script">database creation script</a> to create the database and populate it with sample data for MySQL. Run this script on your MySQL database to setup the tables to correctly for the portlet.</li>
+  <li>In the portlet.xml of the portlet found in &lt;PortletRoo&gt;/web-src/WEB-INF/portlet.xml locate the entry:
+    <ul>
+      <li>&lt;preference&gt;<br />
+&lt;name&gt;JDBC_DRIVER_URL&lt;/name&gt;<br />
+&lt;value&gt;<br />
+<em><strong>jdbc:mysql://localhost/chart?user=chart&amp;amp;password=chart</strong></em><br />
+&lt;/value&gt;<br />
+&lt;/preference&gt;</li>
+    </ul>
+    <blockquote>
+      <p>Modify the above to point to the host on which MySQL is running. Let is be &quot;localhost&quot; if the MySQL is on the same machine as the machine on which the portlet is being deployed.</p>
+    </blockquote>
+  </li>
+  <li>Deploy the portlet as per the deploy instructions of JetSpeed. For ease of reference, it can be found <a href="http://portals.apache.org/jetspeed-2/multiproject/jetspeed-deploy-tools/index.html">here</a>.</li>
+</ul>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="db-script">Database Creation Script</a></h3>
+<pre>create database chart;
+ use chart;</pre>
+<pre>CREATE TABLE piechart (
+   product_category VARCHAR(32),
+   bug_count FLOAT
+   );</pre>
+<pre>CREATE TABLE barchart (
+   category VARCHAR(32),
+   series1 FLOAT,
+   series2 FLOAT,
+   series3 FLOAT
+   );</pre>
+<pre>CREATE TABLE timeseries (
+   date DATE,
+   series1 FLOAT,
+   series2 FLOAT,
+   series3 FLOAT
+   );
+ </pre>
+<pre>INSERT INTO piechart VALUES ('London', 54.3);
+INSERT INTO piechart VALUES ('New York', 43.4);
+INSERT INTO piechart VALUES ('Paris', 17.9);
+ </pre>
+<pre>INSERT INTO barchart VALUES ('London', 54.3, 32.1, 53.4);
+INSERT INTO barchart VALUES ('New York', 43.4, 54.3, 75.2);
+INSERT INTO barchart VALUES ('Paris', 17.9, 34.8, 37.1);
+ </pre>
+<pre>INSERT INTO timeseries VALUES ('2006-05-1', 54.3, 32.1, 53.4);
+INSERT INTO timeseries VALUES ('2006-05-1', 43.4, 54.3, 75.2);
+INSERT INTO timeseries VALUES ('2006-05-1', 39.6, 55.9, 37.1);
+INSERT INTO timeseries VALUES ('2006-05-1', 35.4, 55.2, 27.5);
+INSERT INTO timeseries VALUES ('2006-05-1', 33.9, 49.8, 22.3);
+INSERT INTO timeseries VALUES ('2006-05-1', 35.2, 48.4, 17.7);
+INSERT INTO timeseries VALUES ('2006-05-1', 38.9, 49.7, 15.3);
+INSERT INTO timeseries VALUES ('2006-05-1', 36.3, 44.4, 12.1);
+INSERT INTO timeseries VALUES ('2006-05-1', 31.0, 46.3, 11.0);</pre>
+<p>&nbsp; </p>
+</p>
+</body>
+</html>

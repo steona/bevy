@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="build" name="ChartPortlet">
+
+	<property name="jetspeed-deploy-dir" value="C:/Apache/Jetspeed-2.1/webapps/jetspeed/WEB-INF/deploy"/>
+	
+    <property name="dist" value="dist" />
+	<property name="portlet-api-jar" value="lib/portlet.jar"/>
+	<property name="servlet-api-jar" value="lib/servlet-api.jar"/>	
+	<property name="web-inf-lib" value="web-src/WEB-INF/lib"/>
+	<property name="web-inf-classes" value="${dist}/WEB-INF/classes"/>
+	
+	<path id="project.classpath">
+		<!-- <pathelement location="build/classes" /> -->
+		<pathelement location="${web-inf-lib}/jcommon-1.0.0.jar" />
+		<pathelement location="${web-inf-lib}/jcommon-1.0.0.jar" />		
+		<pathelement location="${web-inf-lib}/jfreechart-1.0.1.jar" />		
+		<pathelement location="${web-inf-lib}/mysql-connector-java-3.1.12-bin.jar" />
+		<pathelement location="${portlet-api-jar}"/>
+		<pathelement location="${servlet-api-jar}"/>
+			
+	</path>
+	<target name="init">
+		<mkdir dir="${dist}" />
+		<mkdir dir="${web-inf-classes}" />
+	</target>
+	
+	<target name="clean">
+		<delete dir="${dist}" />
+	</target>
+	
+	<target depends="clean,init" name="build">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac debug="on" destdir="${web-inf-classes}">
+			<src path="src" />
+			<classpath refid="project.classpath" />
+		</javac>
+
+		<copy todir="dist">
+			<fileset dir="web-src" />
+		</copy>
+
+		<copy todir="${web-inf-classes}" file="resources/portlet_en.properties" />
+		<jar destfile="${dist}/ChartPortlet.war" basedir="dist" />
+		<!-- The following will auto deploy to your Jetspeed portal. Uncomment if you wish to use this feature
+		<copy toDir="${jetspeed-deploy-dir}" file="ChartPortlet.war" />
+		-->
+
+	</target>
+</project>
