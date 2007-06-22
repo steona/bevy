@@ -1,13 +1,19 @@
 #summary Chart Portlet Using JFreeChart
 
-= Summary =
+=== Summary ===
 
 This is a sample portlet that shows how to generate charts using the [http://www.jfree.org/jfreechart/ JFreeChart] library. JFreeChart is an open-source graphing and charting library. I have written an article on Sun Developer Network that talks in brief detail on how to develop a portlet using this library.
 
 This sample portlet here is an extension to that article. It shows how you can read data from a database and create dynamic charts from that data. The difference between this portlet and the one which the article talks about is that in this portlet the chart is generated dynamically and not saved in any temporary location. In addition to this, the current portlet also allows the user to select the type of chart he wants to generate and then dynamically fetches the data from the database ( based on the SQL that the user specifies ) and renders the chart.
 
 
-= Details =
+=== Installation ===
+
+This portlet has been tested on [http://portals.apache.org/jetspeed-2/ JetSpeed 2.x] final release. The portlet specifically uses the scheme in which variables between the PortletSession and HttpSession are shared and hence requires the container hosting the portlet apps to support sharing session cross context. Tomcat ( which the default JetSpeed installation uses ) supports this feature and hence this portlet works fine on JetSpeed 2.0
+
+** For setting up this portlet to work on JetSpeed 2.0 follow the steps:
+# Install and setup JetSpeed as per its installation instructions.
+# Locate the server.xml file under <JetSpeecInstallHome>/conf
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
