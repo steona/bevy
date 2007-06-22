@@ -11,9 +11,9 @@ This sample portlet here is an extension to that article. It shows how you can r
 
 This portlet has been tested on [http://portals.apache.org/jetspeed-2/ JetSpeed 2.x] final release. The portlet specifically uses the scheme in which variables between the PortletSession and HttpSession are shared and hence requires the container hosting the portlet apps to support sharing session cross context. Tomcat ( which the default JetSpeed installation uses ) supports this feature and hence this portlet works fine on JetSpeed 2.0
 
-** For setting up this portlet to work on JetSpeed 2.0 follow the steps:
-# Install and setup JetSpeed as per its installation instructions.
-# Locate the server.xml file under <JetSpeecInstallHome>/conf
+* For setting up this portlet to work on JetSpeed 2.0 follow the steps:
+  # Install and setup JetSpeed as per its installation instructions.
+  # Locate the server.xml file under <JetSpeecInstallHome>/conf
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
