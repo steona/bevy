@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~ Licensed to the Apache Software Foundation (ASF) under one
+ ~ or more contributor license agreements.  See the NOTICE file
+ ~ distributed with this work for additional information
+ ~ regarding copyright ownership.  The ASF licenses this file
+ ~ to you under the Apache License, Version 2.0 (the
+ ~ "License"); you may not use this file except in compliance
+ ~ with the License.  You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ ~
+ ~
+ ~ Author Of This Software : Sandeep Soni [ Sandeep.Soni at gmail dot com ]
+ ~ With Active Contributions from Murali Krishna Reddy
+ 
+ ~ Do Let Me Know by Email if you used the software and found it useful.
+ 
+ -->
+<project name="SharePoint" default="main-with-generated-code" basedir=".">
+	<description>Builds, tests, and runs the project JWS Based Sharepoint Portlets.</description>
+	<property name="war.name" value="Sharepoint.war"/>
+	<!-- Setup these paths -->
+	<property name="jaxb.home" location="D:/Java/Tools/jaxb2.1.1/jaxb-ri-20070125"/>
+	<property name="portlet-container-autodeploy-dir" value="D:/Java/Tools/glassfish/domains/domain1/portlet-container/autodeploy"/>
+	
+	<!-- Should not need to touch anything below this -->
+	
+	<!-- Define Directories -->
+	<property name="src" location="src"/>
+	<property name="generated.src" location="generated-src"/>
+	<property name="dist" location="dist"/>
+	<!-- Distribution Directory -->
+	<property name="resources" location="resources"/>
+	<property name="classes" location="classes"/>
+	<property name="wss.wsdl" location="${resources}/wsdl"/>
+	<property name="sun.wss.schemas" location="${resources}/schemas"/>
+	<property name="portlet.jar.lib.dir" location="./libs"/>
+	<!-- Location of the AXIS tool -->
+	<property name="axis.home" location="./libs/axis-bin-1_4"/>
+	<!-- Location of jmaki jar-->
+	<property name="jmaki.jar" location="./web-src/WEB-INF/lib"/>
+	<!-- for junit tests -->
+	<property name="test.dir" location="tests"/>
+	<property name="junit.home" location="./libs/junit3.8.1"/>
+	<property name="junit.jar" location="${junit.home}/junit.jar"/>
+	<!-- Define the Microsoft individual schemas namespaces -->
+	<property name="microsoft.soap.schema.list.namespace" value="http://schemas.microsoft.com/sharepoint/soap/"/>
+	<property name="microsoft.soap.schema.alerts.namespace" value="http://schemas.microsoft.com/sharepoint/soap/2002/1/alerts/"/>
+	<property name="microsoft.soap.schema.sites.namespace" value="http://schemas.microsoft.com/sharepoint/soap/"/>
+	<property name="microsoft.soap.schema.webpart.namespace" value="http://microsoft.com/sharepoint/webpartpages"/>
+	<property name="microsoft.soap.schema.webs.namespace" value="http://schemas.microsoft.com/sharepoint/soap/"/>
+	<property name="microsoft.soap.schema.forms.namespace" value="http://schemas.microsoft.com/sharepoint/soap/"/>
+	<property name="lib.dir" location="lib"/>
+	<property name="webinf.lib.dir" location="web-src/WEB-INF/lib"/>
+	<property name="webinf.classes.dir" location="web-src/WEB-INF/classes"/>
+	<property name="websrc.xsl.list" location="web-src/xsl/list"/>
+	<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+		<classpath>
+			<fileset dir="${jaxb.home}/lib" includes="*.jar"/>
+		</classpath>
+	</taskdef>
+	<target name="init">
+		<mkdir dir="${webinf.classes.dir}"/>
+		<mkdir dir="${dist}"/>
+		<mkdir dir="${classes}"/>
+		<mkdir dir="${generated.src}"/>
+		<path id="axis.classpath">
+			<fileset dir="${axis.home}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</path>
+		<taskdef resource="axis-tasks.properties" classpathref="axis.classpath"/>
+	</target>
+	<target name="wsdl2java" depends="init">
+		<axis-wsdl2java output="${generated.src}" debug="true" testcase="true" verbose="true" url="${wss.wsdl}/Lists.wsdl">
+			<mapping namespace="${microsoft.soap.schema.list.namespace}" package="com.microsoft.schemas.sharepoint.soap.list"/>
+		</axis-wsdl2java>
+		<axis-wsdl2java output="${generated.src}" debug="true" testcase="true" verbose="true" url="${wss.wsdl}/sites.wsdl">
+			<mapping namespace="${microsoft.soap.schema.sites.namespace}" package="com.microsoft.schemas.sharepoint.soap.sites"/>
+		</axis-wsdl2java>
+		<axis-wsdl2java output="${generated.src}" debug="true" testcase="true" verbose="true" url="${wss.wsdl}/webs.wsdl">
+			<mapping namespace="${microsoft.soap.schema.webs.namespace}" package="com.microsoft.schemas.sharepoint.soap.webs"/>
+		</axis-wsdl2java>
+		<axis-wsdl2java output="${generated.src}" debug="true" testcase="true" verbose="true" url="${wss.wsdl}/WebPartPages.wsdl">
+			<mapping namespace="${microsoft.soap.schema.webpart.namespace}" package="com.microsoft.schemas.sharepoint.soap.webpart"/>
+		</axis-wsdl2java>
+		<axis-wsdl2java output="${generated.src}" debug="true" testcase="true" verbose="true" url="${wss.wsdl}/Forms.wsdl">
+			<mapping namespace="${microsoft.soap.schema.forms.namespace}" package="com.microsoft.schemas.sharepoint.soap.forms"/>
+		</axis-wsdl2java>
+		<axis-wsdl2java output="${generated.src}" testcase="true" verbose="true" url="${wss.wsdl}/Meetings.wsdl">
+			<mapping namespace="${microsoft.soap.schema.list.namespace}" package="com.microsoft.schemas.sharepoint.soap.meetings"/>
+		</axis-wsdl2java>
+		<axis-wsdl2java output="${generated.src}" testcase="true" verbose="true" url="${wss.wsdl}/Alerts.wsdl">
+			<mapping namespace="${microsoft.soap.schema.alerts.namespace}" package="com.microsoft.schemas.sharepoint.soap.alerts"/>
+		</axis-wsdl2java>
+		<axis-wsdl2java output="${generated.src}" testcase="true" verbose="true" url="${wss.wsdl}/Views.wsdl">
+			<mapping namespace="${microsoft.soap.schema.list.namespace}" package="com.microsoft.schemas.sharepoint.soap.views"/>
+		</axis-wsdl2java>
+	</target>
+	<target name="jaxb" depends="init">
+		<echo message="Compiling the Batch Object XSD"/>
+		<!--<xjc schema="${sun.wss.schemas}/Batch.xsd" source="1.0" target="${generated.src}"-->
+		<!--package="com.sun.portal.sharepoint.schemas.batch"/>-->
+		<xjc schema="${sun.wss.schemas}/Batch.xsd" destdir="${generated.src}" package="com.sun.portal.sharepoint.schemas.batch"/>
+		<echo message="Compiling the WSS WebSites Object XSD"/>
+		<xjc schema="${sun.wss.schemas}/site-collection.xsd" destdir="${generated.src}" package="com.sun.portal.sharepoint.schemas.sites"/>
+		<echo message="Compiling the singleListAndView Object XSD"/>
+		<xjc schema="${sun.wss.schemas}/singleListAndView.xsd" destdir="${generated.src}" package="com.sun.portal.sharepoint.schemas.list.single"/>
+		<echo message="Compiling the getFields Object XSD"/>
+		<xjc schema="${sun.wss.schemas}/getFields.xsd" destdir="${generated.src}" package="com.sun.portal.sharepoint.schemas.list.fields"/>
+		<echo message="Compiling the wss-list-collections Object XSD"/>
+		<xjc schema="${sun.wss.schemas}/wss-list-collections.xsd" destdir="${generated.src}" package="com.sun.portal.sharepoint.schemas.list.collections"/>
+		<echo message="Compiling the wss-meeting-collections Object XSD"/>
+		<xjc schema="${sun.wss.schemas}/wss-meeting-collections.xsd" destdir="${generated.src}" package="com.sun.portal.sharepoint.schemas.meeting.collections"/>
+		<echo message="Compiling the wss-documents-collections Object XSD"/>
+		<xjc schema="${sun.wss.schemas}/wss-documents-collections.xsd" destdir="${generated.src}" package="com.sun.portal.sharepoint.schemas.list.collections"/>
+	</target>
+	<target name="compile">
+		<path id="portlet.compile.classpath">
+			<fileset dir="${portlet.jar.lib.dir}">
+				<include name="portlet.jar"/>
+			</fileset>
+			<fileset dir="${junit.home}">
+				<include name="**/*.jar"/>
+			</fileset>
+			<fileset dir="${webinf.lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+			<fileset dir="${jmaki.jar}">
+				<include name="ajax-wrapper-comp.jar"/>
+			</fileset>
+			<fileset dir="${axis.home}/lib">
+				<include name="*.jar"/>
+			</fileset>
+		</path>
+		<echo message="Compiling sharepoint portlet and helper code"/>
+		<javac classpathref="portlet.compile.classpath" destdir="${classes}" debug="on">
+			<src path="${src}"/>
+			<src path="${generated.src}"/>
+		</javac>
+		<copy toDir="${classes}">
+			<fileset dir="${generated.src}" id="generated.jaxb.properties">
+				<include name="**/jaxb.properties"/>
+			</fileset>
+		</copy>
+	</target>
+	<target name="clean">
+		<delete dir="${dist}"/>
+		<delete dir="${classes}"/>
+		<delete dir="${dist.webinf.classes}"/>
+		<delete dir="${generated.src}"/>
+	</target>
+	<target name="build.war" depends="compile">
+		<property name="dist.webinf.classes" value="${dist}/WEB-INF/classes"/>
+		<property name="dist.webinf.lib" value="${dist}/WEB-INF/lib"/>
+		<copy todir="${dist}">
+			<fileset dir="web-src"/>
+		</copy>
+		<copy todir="${dist.webinf.lib}" file="${jmaki.jar}/ajax-wrapper-comp.jar"/>
+		<mkdir dir="${dist.webinf.classes}"/>
+		<copy todir="${dist.webinf.classes}" file="${resources}/portlet_en.properties"/>
+		<copy todir="${dist.webinf.classes}/com/sun/portal/portlets/wss/helpers" file="${resources}/unittest.properties"/>
+		<copy todir="${dist.webinf.classes}">
+			<fileset dir="${classes}"/>
+		</copy>
+		<jar destfile="${war.name}" basedir="${dist}"/>
+		<!--<copy toDir="${portlet-container-autodeploy-dir}" file="${war.name}" overwrite="true"/>-->
+	</target>
+	<target name="main-with-generated-code" depends="clean,init,jaxb,wsdl2java,compile,build.war"/>
+</project>

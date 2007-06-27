@@ -1,0 +1,28 @@
+body {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+}
+
+td {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+}
+
+.tableHeader {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    color: #660000;
+}
+
+.cellBody {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+}
+
+.showRows {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 8px;
+    color: #ff9999;
+
+}

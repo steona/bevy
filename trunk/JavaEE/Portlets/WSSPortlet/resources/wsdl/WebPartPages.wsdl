@@ -1,0 +1,416 @@
+<!--
+ ~ Licensed to the Apache Software Foundation (ASF) under one
+ ~ or more contributor license agreements.  See the NOTICE file
+ ~ distributed with this work for additional information
+ ~ regarding copyright ownership.  The ASF licenses this file
+ ~ to you under the Apache License, Version 2.0 (the
+ ~ "License"); you may not use this file except in compliance
+ ~ with the License.  You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ ~
+ ~
+ ~ Author Of This Software : Sandeep Soni [ Sandeep.Soni at gmail dot com ]
+ ~ With Active Contributions from Murali Krishna Reddy
+ 
+ ~ Do Let Me Know by Email if you used the software and found it useful.
+ 
+ -->
+<definitions xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema"
+             xmlns:s0="http://microsoft.com/sharepoint/webpartpages"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             targetNamespace="http://microsoft.com/sharepoint/webpartpages" xmlns="http://schemas.xmlsoap.org/wsdl/">
+    <types>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/sharepoint/webpartpages">
+            <s:import namespace="http://microsoft.com/wsdl/types/"/>
+            <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+            <s:element name="GetWebPartPageDocument">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="documentName" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetWebPartPageDocumentResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetWebPartPageDocumentResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RenderWebPartForEdit">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="webPartXml" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RenderWebPartForEditResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RenderWebPartForEditResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetXmlDataFromDataSource">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="queryXml" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetXmlDataFromDataSourceResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetXmlDataFromDataSourceResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="AddWebPart">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="pageUrl" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="webPartXml" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="storage" type="s0:Storage"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:simpleType name="Storage">
+                <s:restriction base="s:string">
+                    <s:enumeration value="None"/>
+                    <s:enumeration value="Personal"/>
+                    <s:enumeration value="Shared"/>
+                </s:restriction>
+            </s:simpleType>
+            <s:element name="AddWebPartResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="AddWebPartResult" type="s1:guid"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetWebPart">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="pageurl" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="storageKey" type="s1:guid"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="storage" type="s0:Storage"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetWebPartResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetWebPartResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetWebPartProperties">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="pageUrl" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="storage" type="s0:Storage"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetWebPartPropertiesResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetWebPartPropertiesResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SaveWebPart">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="pageUrl" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="storageKey" type="s1:guid"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="webPartXml" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="storage" type="s0:Storage"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SaveWebPartResponse">
+                <s:complexType/>
+            </s:element>
+            <s:element name="DeleteWebPart">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="pageUrl" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="storageKey" type="s1:guid"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="storage" type="s0:Storage"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="DeleteWebPartResponse">
+                <s:complexType/>
+            </s:element>
+            <s:element name="GetWebPartPageConnectionInfo">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="sourcePageUrl" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="sourcePageContents" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="providerPartID" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="lcid" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetWebPartPageConnectionInfoResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetWebPartPageConnectionInfoResult"
+                                   type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetWebPartCrossPageCompatibility">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="sourcePageUrl" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="sourcePageContents" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="targetPageUrl" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="targetPageContents" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="providerPartID" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="lcid" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetWebPartCrossPageCompatibilityResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetWebPartCrossPageCompatibilityResult"
+                                   type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+        </s:schema>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+            <s:simpleType name="guid">
+                <s:restriction base="s:string">
+                    <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"/>
+                </s:restriction>
+            </s:simpleType>
+        </s:schema>
+    </types>
+    <message name="GetWebPartPageDocumentSoapIn">
+        <part name="parameters" element="s0:GetWebPartPageDocument"/>
+    </message>
+    <message name="GetWebPartPageDocumentSoapOut">
+        <part name="parameters" element="s0:GetWebPartPageDocumentResponse"/>
+    </message>
+    <message name="RenderWebPartForEditSoapIn">
+        <part name="parameters" element="s0:RenderWebPartForEdit"/>
+    </message>
+    <message name="RenderWebPartForEditSoapOut">
+        <part name="parameters" element="s0:RenderWebPartForEditResponse"/>
+    </message>
+    <message name="GetXmlDataFromDataSourceSoapIn">
+        <part name="parameters" element="s0:GetXmlDataFromDataSource"/>
+    </message>
+    <message name="GetXmlDataFromDataSourceSoapOut">
+        <part name="parameters" element="s0:GetXmlDataFromDataSourceResponse"/>
+    </message>
+    <message name="AddWebPartSoapIn">
+        <part name="parameters" element="s0:AddWebPart"/>
+    </message>
+    <message name="AddWebPartSoapOut">
+        <part name="parameters" element="s0:AddWebPartResponse"/>
+    </message>
+    <message name="GetWebPartSoapIn">
+        <part name="parameters" element="s0:GetWebPart"/>
+    </message>
+    <message name="GetWebPartSoapOut">
+        <part name="parameters" element="s0:GetWebPartResponse"/>
+    </message>
+    <message name="GetWebPartPropertiesSoapIn">
+        <part name="parameters" element="s0:GetWebPartProperties"/>
+    </message>
+    <message name="GetWebPartPropertiesSoapOut">
+        <part name="parameters" element="s0:GetWebPartPropertiesResponse"/>
+    </message>
+    <message name="SaveWebPartSoapIn">
+        <part name="parameters" element="s0:SaveWebPart"/>
+    </message>
+    <message name="SaveWebPartSoapOut">
+        <part name="parameters" element="s0:SaveWebPartResponse"/>
+    </message>
+    <message name="DeleteWebPartSoapIn">
+        <part name="parameters" element="s0:DeleteWebPart"/>
+    </message>
+    <message name="DeleteWebPartSoapOut">
+        <part name="parameters" element="s0:DeleteWebPartResponse"/>
+    </message>
+    <message name="GetWebPartPageConnectionInfoSoapIn">
+        <part name="parameters" element="s0:GetWebPartPageConnectionInfo"/>
+    </message>
+    <message name="GetWebPartPageConnectionInfoSoapOut">
+        <part name="parameters" element="s0:GetWebPartPageConnectionInfoResponse"/>
+    </message>
+    <message name="GetWebPartCrossPageCompatibilitySoapIn">
+        <part name="parameters" element="s0:GetWebPartCrossPageCompatibility"/>
+    </message>
+    <message name="GetWebPartCrossPageCompatibilitySoapOut">
+        <part name="parameters" element="s0:GetWebPartCrossPageCompatibilityResponse"/>
+    </message>
+    <portType name="WebPartPagesWebServiceSoap">
+        <operation name="GetWebPartPageDocument">
+            <input message="s0:GetWebPartPageDocumentSoapIn"/>
+            <output message="s0:GetWebPartPageDocumentSoapOut"/>
+        </operation>
+        <operation name="RenderWebPartForEdit">
+            <input message="s0:RenderWebPartForEditSoapIn"/>
+            <output message="s0:RenderWebPartForEditSoapOut"/>
+        </operation>
+        <operation name="GetXmlDataFromDataSource">
+            <input message="s0:GetXmlDataFromDataSourceSoapIn"/>
+            <output message="s0:GetXmlDataFromDataSourceSoapOut"/>
+        </operation>
+        <operation name="AddWebPart">
+            <input message="s0:AddWebPartSoapIn"/>
+            <output message="s0:AddWebPartSoapOut"/>
+        </operation>
+        <operation name="GetWebPart">
+            <input message="s0:GetWebPartSoapIn"/>
+            <output message="s0:GetWebPartSoapOut"/>
+        </operation>
+        <operation name="GetWebPartProperties">
+            <input message="s0:GetWebPartPropertiesSoapIn"/>
+            <output message="s0:GetWebPartPropertiesSoapOut"/>
+        </operation>
+        <operation name="SaveWebPart">
+            <input message="s0:SaveWebPartSoapIn"/>
+            <output message="s0:SaveWebPartSoapOut"/>
+        </operation>
+        <operation name="DeleteWebPart">
+            <input message="s0:DeleteWebPartSoapIn"/>
+            <output message="s0:DeleteWebPartSoapOut"/>
+        </operation>
+        <operation name="GetWebPartPageConnectionInfo">
+            <input message="s0:GetWebPartPageConnectionInfoSoapIn"/>
+            <output message="s0:GetWebPartPageConnectionInfoSoapOut"/>
+        </operation>
+        <operation name="GetWebPartCrossPageCompatibility">
+            <input message="s0:GetWebPartCrossPageCompatibilitySoapIn"/>
+            <output message="s0:GetWebPartCrossPageCompatibilitySoapOut"/>
+        </operation>
+    </portType>
+    <binding name="WebPartPagesWebServiceSoap" type="s0:WebPartPagesWebServiceSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="GetWebPartPageDocument">
+            <soap:operation soapAction="http://microsoft.com/sharepoint/webpartpages/GetWebPartPageDocument"
+                            style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="RenderWebPartForEdit">
+            <soap:operation soapAction="http://microsoft.com/sharepoint/webpartpages/RenderWebPartForEdit"
+                            style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetXmlDataFromDataSource">
+            <soap:operation soapAction="http://microsoft.com/sharepoint/webpartpages/GetXmlDataFromDataSource"
+                            style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="AddWebPart">
+            <soap:operation soapAction="http://microsoft.com/sharepoint/webpartpages/AddWebPart" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetWebPart">
+            <soap:operation soapAction="http://microsoft.com/sharepoint/webpartpages/GetWebPart" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetWebPartProperties">
+            <soap:operation soapAction="http://microsoft.com/sharepoint/webpartpages/GetWebPartProperties"
+                            style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="SaveWebPart">
+            <soap:operation soapAction="http://microsoft.com/sharepoint/webpartpages/SaveWebPart" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="DeleteWebPart">
+            <soap:operation soapAction="http://microsoft.com/sharepoint/webpartpages/DeleteWebPart" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetWebPartPageConnectionInfo">
+            <soap:operation soapAction="http://microsoft.com/sharepoint/webpartpages/GetWebPartPageConnectionInfo"
+                            style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetWebPartCrossPageCompatibility">
+            <soap:operation soapAction="http://microsoft.com/sharepoint/webpartpages/GetWebPartCrossPageCompatibility"
+                            style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="WebPartPagesWebService">
+        <port name="WebPartPagesWebServiceSoap" binding="s0:WebPartPagesWebServiceSoap">
+            <soap:address location="http://129.158.227.228/_vti_bin/WebPartPages.asmx"/>
+        </port>
+    </service>
+</definitions>
