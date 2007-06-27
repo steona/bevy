@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="WssSingleList">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="DefaultView"/>
+            </xs:sequence>
+            <xs:attribute name="Author" use="required" type="xs:string"/>
+            <xs:attribute name="CreationDateTime" use="required"/>
+            <xs:attribute name="Description" use="required"/>
+            <xs:attribute name="ID" use="required"/>
+            <xs:attribute name="ItemCount" use="required" type="xs:integer"/>
+            <xs:attribute name="LastModified" use="required"/>
+            <xs:attribute name="Name" use="required"/>
+            <xs:attribute name="Title" use="required" type="xs:NCName"/>
+            <xs:attribute name="RootFolder"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DefaultView">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="ViewField"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ViewField">
+        <xs:complexType>
+            <xs:attribute name="Name" use="required" type="xs:string"/>
+            <xs:attribute name="DisplayName" use="required" type="xs:string"/>
+            <xs:attribute name="Type" type="xs:string"/>
+        </xs:complexType>
+
+    </xs:element>
+</xs:schema>

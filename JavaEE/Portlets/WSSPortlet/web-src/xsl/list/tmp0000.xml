@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+ ~ Licensed to the Apache Software Foundation (ASF) under one
+ ~ or more contributor license agreements.  See the NOTICE file
+ ~ distributed with this work for additional information
+ ~ regarding copyright ownership.  The ASF licenses this file
+ ~ to you under the Apache License, Version 2.0 (the
+ ~ "License"); you may not use this file except in compliance
+ ~ with the License.  You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ ~
+ ~
+ ~ Author Of This Software : Sandeep Soni [ Sandeep.Soni at gmail dot com ]
+ ~ With Active Contributions from Murali Krishna Reddy
+ 
+ ~ Do Let Me Know by Email if you used the software and found it useful.
+ 
+ -->
+<ns1:ListAndView xmlns:ns1="http://schemas.microsoft.com/sharepoint/soap/">
+    <ns1:List DocTemplateUrl="" DefaultViewUrl="/Lists/Announcements/AllItems.aspx"
+              ID="{3EBC2A34-280A-4B29-A6CF-38B531DB89C5}" Title="Announcements"
+              Description="Use the Announcements list to post messages on the home page of your site."
+              ImageUrl="/_layouts/images/itann.gif" Name="{3EBC2A34-280A-4B29-A6CF-38B531DB89C5}" BaseType="0"
+              ServerTemplate="104" Created="20070212 11:49:14" Modified="20070222 07:09:01"
+              LastDeleted="20070212 11:49:14" Version="0" Direction="none" ThumbnailSize="" WebImageWidth=""
+              WebImageHeight="" Flags="16781312" ItemCount="10" AnonymousPermMask="" RootFolder="/Lists/Announcements"
+              ReadSecurity="1" WriteSecurity="1" Author="1" EventSinkAssembly="" EventSinkClass="" EventSinkData=""
+              EmailInsertsFolder="" AllowDeletion="True" AllowMultiResponses="False" EnableAttachments="True"
+              EnableModeration="False" EnableVersioning="False" Hidden="False" MultipleDataList="False" Ordered="False"
+              ShowUser="True">
+        <ns1:Fields>
+            <ns1:Field ColName="tp_ID" ReadOnly="TRUE" Type="Counter" Name="ID" PrimaryKey="TRUE" DisplayName="ID"
+                       FromBaseType="TRUE"/>
+            <ns1:Field Type="Text" Name="Title" DisplayName="Title" Required="TRUE" FromBaseType="TRUE"
+                       ColName="nvarchar1"/>
+            <ns1:Field ColName="tp_Modified" ReadOnly="TRUE" Type="DateTime" Name="Modified" DisplayName="Modified"
+                       StorageTZ="TRUE" FromBaseType="TRUE"/>
+            <ns1:Field ColName="tp_Created" ReadOnly="TRUE" Type="DateTime" Name="Created" DisplayName="Created"
+                       StorageTZ="TRUE" FromBaseType="TRUE"/>
+            <ns1:Field ColName="tp_Author" ReadOnly="TRUE" Type="User" List="UserInfo" Name="Author"
+                       DisplayName="Created By" FromBaseType="TRUE"/>
+            <ns1:Field ColName="tp_Editor" ReadOnly="TRUE" Type="User" List="UserInfo" Name="Editor"
+                       DisplayName="Modified By" FromBaseType="TRUE"/>
+            <ns1:Field ColName="tp_Version" Hidden="TRUE" ReadOnly="TRUE" Type="Integer" SetAs="owshiddenversion"
+                       Name="owshiddenversion" DisplayName="owshiddenversion" FromBaseType="TRUE"/>
+            <ns1:Field ColName="tp_HasAttachment" Type="Attachments" Name="Attachments" DisplayName="Attachments"
+                       FromBaseType="TRUE"/>
+            <ns1:Field ColName="tp_ModerationStatus" ReadOnly="TRUE" Type="ModStat" Name="_ModerationStatus"
+                       DisplayName="Approval Status" Hidden="TRUE" CanToggleHidden="TRUE" Required="FALSE"
+                       FromBaseType="TRUE">
+                <ns1:CHOICES>
+                    <ns1:CHOICE>0;#Approved</ns1:CHOICE>
+                    <ns1:CHOICE>1;#Rejected</ns1:CHOICE>
+                    <ns1:CHOICE>2;#Pending</ns1:CHOICE>
+                </ns1:CHOICES>
+                <ns1:Default>0</ns1:Default>
+            </ns1:Field>
+            <ns1:Field ReadOnly="TRUE" Type="Note" Name="_ModerationComments" DisplayName="Approver Comments"
+                       Hidden="TRUE" CanToggleHidden="TRUE" Sortable="FALSE" FromBaseType="TRUE" ColName="ntext1"/>
+            <ns1:Field ReadOnly="TRUE" Type="Computed" Name="Edit" Sortable="FALSE" Filterable="FALSE"
+                       DisplayName="Edit" AuthoringInfo="(link to edit item)" FromBaseType="TRUE">
+                <ns1:DisplayPattern>
+                    <ns1:HTML><![CDATA[<a href="]]></ns1:HTML>
+                    <ns1:URL Cmd="Edit"/>
+                    <ns1:HTML><![CDATA[" onclick="GoToLink(this);return false;" target="_self">]]></ns1:HTML>
+                    <ns1:HTML><![CDATA[<img border="0" alt="]]></ns1:HTML>
+                    <ns1:HTML>Edit</ns1:HTML>
+                    <ns1:HTML><![CDATA[" src="/_layouts/images/edititem.gif">]]></ns1:HTML>
+                    <ns1:HTML><![CDATA[</a>]]></ns1:HTML>
+                </ns1:DisplayPattern>
+            </ns1:Field>
+            <ns1:Field ReadOnly="TRUE" Type="Computed" Name="LinkTitleNoMenu" DisplayName="Title" Dir=""
+                       DisplayNameSrcField="Title" AuthoringInfo="(linked to item)" FromBaseType="TRUE">
+                <ns1:FieldRefs>
+                    <ns1:FieldRef Name="Title"/>
+                </ns1:FieldRefs>
+                <ns1:DisplayPattern>
+                    <ns1:HTML><![CDATA[<a onfocus="OnLink(this)" href="]]></ns1:HTML>
+                    <ns1:URL/>
+                    <ns1:HTML><![CDATA[" ONCLICK="GoToLink(this);return false;" target="_self">]]></ns1:HTML>
+                    <ns1:Column HTMLEncode="TRUE" Name="Title" Default="(no title)"/>
+                    <ns1:HTML><![CDATA[</a>]]></ns1:HTML>
+                    <ns1:IfNew>
+                        <ns1:HTML><![CDATA[<IMG SRC="/_layouts/1033/images/new.gif" alt="]]></ns1:HTML>
+                        <ns1:HTML>New</ns1:HTML>
+                        <ns1:HTML><![CDATA[">]]></ns1:HTML>
+                    </ns1:IfNew>
+                </ns1:DisplayPattern>
+                <ns1:DisplayBidiPattern>
+                    <ns1:HTML><![CDATA[<p dir=]]></ns1:HTML>
+                    <ns1:Property Select="Direction"/>
+                    <ns1:HTML><![CDATA[><a onfocus="OnLink(this)" href="]]></ns1:HTML>
+                    <ns1:URL/>
+                    <ns1:HTML><![CDATA[" ONCLICK="GoToLink(this);return false;" target="_self">]]></ns1:HTML>
+                    <ns1:Column HTMLEncode="TRUE" Name="Title" Default="(no title)"/>
+                    <ns1:HTML><![CDATA[</a>]]></ns1:HTML>
+                    <ns1:IfNew>
+                        <ns1:HTML><![CDATA[<IMG SRC="/_layouts/1033/images/new.gif" alt="]]></ns1:HTML>
+                        <ns1:HTML>New</ns1:HTML>
+                        <ns1:HTML><![CDATA[">]]></ns1:HTML>
+                    </ns1:IfNew>
+                    <ns1:HTML><![CDATA[</p>]]></ns1:HTML>
+                </ns1:DisplayBidiPattern>
+            </ns1:Field>
+            <ns1:Field ReadOnly="TRUE" Type="Computed" Name="LinkTitle" DisplayName="Title" DisplayNameSrcField="Title"
+                       ClassInfo="Menu" AuthoringInfo="(linked to item with edit menu)" FromBaseType="TRUE">
+                <ns1:FieldRefs>
+                    <ns1:FieldRef Name="Title"/>
+                    <ns1:FieldRef Name="ID"/>
+                    <ns1:FieldRef Name="LinkTitleNoMenu"/>
+                </ns1:FieldRefs>
+                <ns1:DisplayPattern>
+                    <ns1:FieldSwitch>
+                        <ns1:Expr>
+                            <ns1:GetVar Name="FreeForm"/>
+                        </ns1:Expr>
+                        <ns1:Case Value="TRUE">
+                            <ns1:Field Name="LinkTitleNoMenu"/>
+                        </ns1:Case>
+                        <ns1:Default>
+                            <ns1:HTML>
+                                <![CDATA[<table height="100%" cellspacing=0 class="ms-unselectedtitle" onmouseover="OnItem(this)" CTXName="ctx]]></ns1:HTML>
+                            <ns1:Counter Type="View"/>
+                            <ns1:HTML>&quot; ItemId=&quot;</ns1:HTML>
+                            <ns1:Column Name="ID" HTMLEncode="TRUE"/>
+                            <ns1:HTML><![CDATA["><tr><td width="100%" Class="ms-vb">]]></ns1:HTML>
+                            <ns1:Field Name="LinkTitleNoMenu"/>
+                            <ns1:HTML>
+                                <![CDATA[</td><td><img src="/_layouts/images/blank.gif" width=13 style="visibility: hidden" alt=""></td></tr></table>]]></ns1:HTML>
+                        </ns1:Default>
+                    </ns1:FieldSwitch>
+                </ns1:DisplayPattern>
+            </ns1:Field>
+            <ns1:Field ReadOnly="TRUE" Type="Computed" Name="SelectTitle" Hidden="TRUE" CanToggleHidden="TRUE"
+                       DisplayName="Select" Dir="" AuthoringInfo="(web part connection)" HeaderImage="blank.gif"
+                       Sortable="FALSE" FromBaseType="TRUE">
+                <ns1:FieldRefs>
+                    <ns1:FieldRef Name="ID"/>
+                </ns1:FieldRefs>
+                <ns1:DisplayPattern>
+                    <ns1:IfEqual>
+                        <ns1:Expr1>
+                            <ns1:GetVar Name="SelectedID"/>
+                        </ns1:Expr1>
+                        <ns1:Expr2>
+                            <ns1:Column Name="ID"/>
+                        </ns1:Expr2>
+                        <ns1:Then>
+                            <ns1:HTML>
+                                <![CDATA[<img border="0" align="absmiddle" style="cursor: hand" src="/_layouts/images/rbsel.gif" alt="]]></ns1:HTML>
+                            <ns1:HTML>Selected</ns1:HTML>
+                            <ns1:HTML><![CDATA[">]]></ns1:HTML>
+                        </ns1:Then>
+                        <ns1:Else>
+                            <ns1:HTML><![CDATA[<a href="javascript:SelectField(']]></ns1:HTML>
+                            <ns1:GetVar Name="View"/>
+                            <ns1:HTML><![CDATA[',']]></ns1:HTML>
+                            <ns1:ScriptQuote NotAddingQuote="TRUE">
+                                <ns1:Column Name="ID"/>
+                            </ns1:ScriptQuote>
+                            <ns1:HTML><![CDATA[');return false;" onclick="javascript:SelectField(']]></ns1:HTML>
+                            <ns1:GetVar Name="View"/>
+                            <ns1:HTML><![CDATA[',']]></ns1:HTML>
+                            <ns1:ScriptQuote NotAddingQuote="TRUE">
+                                <ns1:Column Name="ID"/>
+                            </ns1:ScriptQuote>
+                            <ns1:HTML><![CDATA[');return false;" target="_self">]]></ns1:HTML>
+                            <ns1:HTML>
+                                <![CDATA[<img border="0" align="absmiddle" style="cursor: hand" src="/_layouts/images/rbunsel.gif"  alt="]]></ns1:HTML>
+                            <ns1:HTML>Normal</ns1:HTML>
+                            <ns1:HTML><![CDATA[">]]></ns1:HTML>
+                            <ns1:HTML><![CDATA[</a>]]></ns1:HTML>
+                        </ns1:Else>
+                    </ns1:IfEqual>
+                </ns1:DisplayPattern>
+            </ns1:Field>
+            <ns1:Field Name="InstanceID" DisplayName="InstanceID" ColName="tp_InstanceID" ReadOnly="TRUE" Hidden="TRUE"
+                       Type="Integer" Min="0" Max="99991231" Filterable="TRUE" Sortable="TRUE" FromBaseType="TRUE"/>
+            <ns1:Field ColName="tp_ItemOrder" Name="Order" DisplayName="Order" Type="Number" Hidden="TRUE"
+                       FromBaseType="TRUE"/>
+            <ns1:Field ColName="tp_GUID" ReadOnly="TRUE" Hidden="TRUE" Type="Guid" Name="GUID" DisplayName="GUID"
+                       FromBaseType="TRUE"/>
+            <ns1:Field Type="Note" RichText="TRUE" Name="Body" DisplayName="Body" Sortable="FALSE" ColName="ntext2"/>
+            <ns1:Field Type="DateTime" Name="Expires" DisplayName="Expires" Format="DateOnly" FromBaseType="TRUE"
+                       ColName="datetime1"/>
+        </ns1:Fields>
+        <ns1:RegionalSettings>
+            <ns1:Language>1033</ns1:Language>
+            <ns1:Locale>1033</ns1:Locale>
+            <ns1:AdvanceHijri>0</ns1:AdvanceHijri>
+            <ns1:CalendarType>1</ns1:CalendarType>
+            <ns1:Time24>False</ns1:Time24>
+            <ns1:TimeZone>-330</ns1:TimeZone>
+            <ns1:SortOrder>2070</ns1:SortOrder>
+            <ns1:Presence>True</ns1:Presence>
+        </ns1:RegionalSettings>
+    </ns1:List>
+    <ns1:View Name="{401B76B6-E671-475F-94A0-AB37F7467917}" DefaultView="TRUE" Type="HTML" DisplayName="All Items"
+              Url="Lists/Announcements/AllItems.aspx" BaseViewID="1">
+        <ns1:Query>
+            <ns1:OrderBy>
+                <ns1:FieldRef Name="Modified" Ascending="FALSE"/>
+            </ns1:OrderBy>
+        </ns1:Query>
+        <ns1:ViewFields>
+            <ns1:FieldRef Name="Attachments"/>
+            <ns1:FieldRef Name="LinkTitle"/>
+            <ns1:FieldRef Name="Modified"/>
+        </ns1:ViewFields>
+        <ns1:RowLimit Paged="TRUE">100</ns1:RowLimit>
+    </ns1:View>
+</ns1:ListAndView>
