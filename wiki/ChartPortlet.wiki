@@ -10,3 +10,5 @@ This sample portlet here is an extension to that article. It shows how you can r
 To read more about the Chart Portlet please read the included documentation (index.html) with the portlet in the "docs" folder ( available on the "Source" tab above )
 
 You can also download the WAR file available on the "Downloads" tab above. But make sure you read the documentation included before proceeding.
+
+You can access the documentation [http://bevy.googlecode.com/svn/trunk/JavaEE/Portlets/ChartPortlet/docs/index.html here].
