@@ -9,5 +9,9 @@ For a little more detail on what the portlet is capable of doing, visit [http://
 
 The portlet is AJAX enabled and for achieving this I have used the Adobe Spry Framework. I must say I am quite impressed with the Spry framework and found it extremely easy to use. Do give it a try!
 
+To actually run this portlet you will need a JSR-286 compliant portlet container such as the [https://portlet-container.dev.java.net/ Open Source Portlet Container]
+
+If you do give this portlet a try, please post your opinions on [http://sonisandeep.blogspot.com my personal blog] or [http://blogs.sun.com/insidemyhead/ my official blog]
+
 
 - Sandeep Soni
