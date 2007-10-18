@@ -1,0 +1,36 @@
+.EvenRow { 
+	background-color: #EEEEEE; 
+}
+
+.DefaultRow {
+	float: left;
+	width: 100%;
+	white-space: nowrap; 
+	overflow: hidden; 
+}
+
+.FeedTitle {
+	margin: 1px;
+}
+
+
+.Feed {
+	margin: 5px;
+}
+
+
+.selectedFeed {
+	background-color: #660033;
+}
+
+.selectedFeedTitle {
+	background-color: #FFCC33;
+}
+
+.RSSTitleListLoading {
+	height: 32px;
+	background-image: url(../images/throbber.gif);
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 36px;
+}
