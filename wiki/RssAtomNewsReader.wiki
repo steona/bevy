@@ -1,4 +1,5 @@
 #summary JSR-286 Compliant RSS and Atom Feed Reader
+#labels Featured
 
 === Summary ===
 
