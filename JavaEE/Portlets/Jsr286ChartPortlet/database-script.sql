@@ -40,3 +40,7 @@ INSERT INTO timeseries VALUES ('2006-05-1', 35.2, 48.4, 17.7);
 INSERT INTO timeseries VALUES ('2006-05-1', 38.9, 49.7, 15.3);
 INSERT INTO timeseries VALUES ('2006-05-1', 36.3, 44.4, 12.1);
 INSERT INTO timeseries VALUES ('2006-05-1', 31.0, 46.3, 11.0);
+
+/* Create a user named 'chart' who has all access to the database 'chart' */
+
+GRANT ALL PRIVILEGES ON chart.* TO 'chart'@'%' IDENTIFIED BY 'chart' WITH GRANT OPTION;
