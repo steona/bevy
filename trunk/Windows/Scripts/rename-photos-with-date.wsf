@@ -1,0 +1,110 @@
+<job id="RenameImageFiles">
+    <runtime>
+        <description>This script copies or renames photo files, taken from a digital camera to include the date the photo was taken in the filename.</description>
+        <named
+            name = "recurse"
+            helpstring = "Flag to recurse into subfolders."
+            type = "boolean"
+        />
+        <named
+            name = "copy"
+            helpstring = "Copy file with a different name, if - for this flag, it means rename the file"
+            type = "boolean"
+        />
+		<named
+            name = "folder"
+            helpstring = "Folder to start the search for image files from."
+            required = "true"
+            type="string"
+        />        
+        
+    </runtime>
+
+	<script language="VBScript">
+		'On Error Resume Next
+		Option Explicit
+		
+
+		If WScript.Arguments.Count <> 3 then
+			WScript.Arguments.ShowUsage
+			WScript.Quit
+		End If	
+	  	
+
+		Dim  objFSO, objConnection , objRecordSet
+
+		Dim modeRecursive , startFolder , copyMode
+		
+		copyMode = false
+		modeRecursive = false
+		
+		startFolder = WScript.Arguments.Named.Item("folder")
+		modeRecursive = WScript.Arguments.Named.Item("recurse")
+		copyMode = WScript.Arguments.Named.Item("copy")
+		
+		WScript.Echo "Folder : " & startFolder
+		WScript.Echo "modeRecursive : " & modeRecursive
+		WScript.Echo "copyMode : " & copyMode
+		
+		WScript.Quit
+		
+
+		Set objFSO = CreateObject("Scripting.FileSystemObject")
+		Set objConnection = CreateObject("ADODB.Connection")
+		Set objRecordSet = CreateObject("ADODB.Recordset")
+		
+		
+		objConnection.Open "Provider=Search.CollatorDSO;Extended Properties='Application=Windows';"
+
+		' Get the folders under this root folder
+		Dim objStartFolder, objSubFolders , objFolder
+
+		Set objStartFolder = objFSO.GetFolder(startFolder)
+		Set objSubFolders = objStartFolder.SubFolders
+
+		' Do the starting folder
+		RenameFileWithDateTime objStartFolder.Path
+
+		' Do the folders under the starting folder
+		For Each objFolder in objSubFolders 
+			RenameFileWithDateTime objFolder.Path
+		Next
+
+		Sub RenameFileWithDateTime(startFolder)
+			Dim fType , fName , fNewName , splitArrayName , dtmPhotoDate , strDay , strMonth, strYear
+			WScript.Echo "Searching folder ... " & startFolder
+			WScript.Echo "---------------------" 
+
+			objRecordSet.Open "SELECT System.ItemPathDisplay, System.Photo.DateTaken, System.ItemType FROM SYSTEMINDEX Where System.ItemFolderPathDisplay = '" & startFolder & "'", objConnection
+
+			If Not objRecordSet.EOF Then
+				objRecordSet.MoveFirst
+
+				Do Until objRecordset.EOF
+				    fName = objRecordset.Fields("System.ItemPathDisplay")
+				    splitArrayName = Split(fName, ".")
+				    fType = objRecordset.Fields("System.ItemType")
+				   
+					If fType <> "folder" then
+					    dtmPhotoDate = objRecordset.Fields("System.Photo.DateTaken")
+					    strDay = Day(dtmPhotoDate)
+					    strMonth = Month(dtmPhotoDate)
+					    strYear = Year(dtmPhotoDate)
+					    fNewName = splitArrayName(0) & "_" & strMonth & "_" & strDay & "_" & strYear & "." & splitArrayName(1)
+					    
+					    WScript.Echo objRecordset.Fields.Item("System.ItemPathDisplay")  & " taken on " & dtmPhotoDate
+					    objFSO.MoveFile fName , fNewName
+					End If
+					    objRecordset.MoveNext
+				Loop
+			Else
+				WScript.Echo "Sorry. I wasn't able to find anything to operate on!"	
+			End If
+			
+			WScript.Echo
+			objRecordSet.Close
+		End Sub
+	</script>
+</job>
+
+
