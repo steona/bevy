@@ -1,0 +1,13 @@
+#labels SIP,JAVA,IM
+*This wiki page will have all the documentation collected regarding SIP,SIMPLE for leveraging presence features.*
+
+
+_FAQ's of SIP and SIMPLE:-_
+
+1.What is JAIN SIP ?
+
+2.How is SIP different for XMPP ?
+
+3.How can SIP be used for Instant messaging ?
+
+4.Open Source SIP servers available ?
