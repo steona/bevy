@@ -1,0 +1,21 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+This page will have useful tips about tomcat
+
+= Details =
+
+how to attach a debugger in tomcat
+
+in startup.bat
+
+call "%EXECUTABLE%" jpda start %CMD_LINE_ARGS%
+
+in catalina.bat
+
+if not "%JPDA_TRANSPORT%" == "" goto gotJpdaTransport
+set JPDA_TRANSPORT=_dt_socket_
+:gotJpdaTransport
+if not "%JPDA_ADDRESS%" == "" goto gotJpdaAddress
+set JPDA_ADDRESS=_9009_
