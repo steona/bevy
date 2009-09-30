@@ -23,12 +23,24 @@ Developed by : Sandeep Soni [ http://sonisandeep.blogspot.com,
     <string name="CreateAccount">Create Account</string>
     <string name="OK">Ok</string>
     
-    <string name="app_name">Personal Diary</string>
-<string name="Previous">Previous</string>
-<string name="Next">Next</string>
+    <string name="app_name">PDiary</string>
+	<string name="Previous">Previous</string>
+	<string name="Next">Next</string>
 
 
-<string name="LoginScreenTitle">Create Account or Login</string>
-<string name="LabelAvatarName">Avatar Name :</string>
-<string name="LabelAvatarPassword">Password :</string>
+	<string name="LoginScreenTitle">Create Account or Login</string>
+	<string name="LabelAvatarName">Avatar Name :</string>
+	<string name="LabelAvatarPassword">Password :</string>
+	<string name="menu_edit">New Note</string>
+    <string name="menu_start">Go To Start Note</string>
+    <string name="menu_recent">List All Notes</string>
+    <string name="menu_delete">Delete Note</string>
+    <string name="menu_export">Export Notes</string>
+    <string name="menu_import">Import Notes</string>
+    <string name="menu_about">About PDiary</string>
+    <string name="menu_email">Mail Note</string>
+    <string name="title">Title</string>
+    <string name="body">Body</string>
+    <string name="save">Save</string>
+    <string name="date">Date</string>
 </resources>
