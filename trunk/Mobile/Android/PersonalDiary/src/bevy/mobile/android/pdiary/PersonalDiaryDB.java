@@ -49,7 +49,7 @@ import android.util.Log;
 public class PersonalDiaryDB extends SQLiteOpenHelper {
 
 	public static final String KEY_TITLE = "title";
-	public static final String KEY_BODY = "body";
+	public static final String KEY_ENTRY = "entry";
 	public static final String KEY_ROWID = "_id";
 	
     private Context _context;
@@ -65,12 +65,12 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 		+ "CREATE TABLE IF NOT EXISTS  \"Avatar\"([id] integer PRIMARY KEY AUTOINCREMENT NOT NULL,[avatar] VARCHAR2(30) NOT NULL,[password] VARCHAR2(10) NOT NULL);"
 		+ "Insert  Into [Avatar] ([id],[avatar],[password]) Values(\"1\",\"soni\",\"soni\");"
 		+ "Drop Table If Exists [entries];"
-		+ "CREATE TABLE IF NOT EXISTS  \"entries\"([id] integer PRIMARY KEY AUTOINCREMENT NOT NULL,[title] NTEXT,[entry] NTEXT,[date_added] TIMESTAMP NOT NULL ON CONFLICT Rollback,[last_modified] TIME ,[avatar_id] BINARY NOT NULL ON CONFLICT Rollback, FOREIGN KEY ([avatar_id]) REFERENCES [Avatar] ([id]) );"
-		+ "Insert  Into [entries] ([id],[title],[entry],[date_added],[last_modified],[avatar_id]) Values(NULL,\"this is a test1\",\"this is a test\",\"2009-09-22 17:13:33\",\"15:12:11\",\"1\");"
-		+ "Insert  Into [entries] ([id],[title],[entry],[date_added],[last_modified],[avatar_id]) Values(NULL,\"this is a test2\",\"this is a test 2\",\"2009-09-24 17:15:33\",\"15:12:11\",\"1\");"
-		+ "Insert  Into [entries] ([id],[title],[entry],[date_added],[last_modified],[avatar_id]) Values(NULL,\"this is a test3\",\"this is a test 3\",\"2009-09-12 17:15:33\",\"15:12:11\",\"1\");"
-		+ "Insert  Into [entries] ([id],[title],[entry],[date_added],[last_modified],[avatar_id]) Values(NULL,\"this is a test4\",\"this is a test 4\",\"2009-09-16 17:15:33\",\"15:12:11\",\"1\");"
-		+ "Insert  Into [entries] ([id],[title],[entry],[date_added],[last_modified],[avatar_id]) Values(NULL,\"this is a test5\",\"this is a test 5\",\"2009-10-24 17:15:33\",\"15:12:11\",\"1\");";
+		+ "CREATE TABLE IF NOT EXISTS  \"entries\"([id] integer PRIMARY KEY AUTOINCREMENT NOT NULL,[title] NTEXT,[entry] NTEXT,[date_added] TIMESTAMP NOT NULL ON CONFLICT Rollback,[last_modified] TIMESTAMP ,[avatar_id] BINARY NOT NULL ON CONFLICT Rollback, FOREIGN KEY ([avatar_id]) REFERENCES [Avatar] ([id]) );"
+		+ "Insert  Into [entries] ([id],[title],[entry],[date_added],[last_modified],[avatar_id]) Values(NULL,\"this is a test1\",\"this is a test\",\"2009-09-22 17:13:33\",\"2009-09-22 15:12:11\",\"1\");"
+		+ "Insert  Into [entries] ([id],[title],[entry],[date_added],[last_modified],[avatar_id]) Values(NULL,\"this is a test2\",\"this is a test 2\",\"2009-09-24 17:15:33\",\"2009-09-22 15:12:11\",\"1\");"
+		+ "Insert  Into [entries] ([id],[title],[entry],[date_added],[last_modified],[avatar_id]) Values(NULL,\"this is a test3\",\"this is a test 3\",\"2009-09-12 17:15:33\",\"2009-09-22 15:12:11\",\"1\");"
+		+ "Insert  Into [entries] ([id],[title],[entry],[date_added],[last_modified],[avatar_id]) Values(NULL,\"this is a test4\",\"this is a test 4\",\"2009-09-16 17:15:33\",\"2009-09-22 15:12:11\",\"1\");"
+		+ "Insert  Into [entries] ([id],[title],[entry],[date_added],[last_modified],[avatar_id]) Values(NULL,\"this is a test5\",\"this is a test 5\",\"2009-10-24 17:15:33\",\"2009-09-22 15:12:11\",\"1\");";
 
 	db.beginTransaction();
 	try {
@@ -120,23 +120,30 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
      * @param body the body of the note
      * @return rowId or -1 if failed
      */
-/*    public long createNote(String title, String body, Date date) {
-    	SQLiteDatabase db = getWritableDatabase();
+     public long createNote(String title, String entry, String date_added/*, Date last_modified, long avatar_id*/
+    		 ) {
+    	SQLiteDatabase _db = getWritableDatabase();
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_TITLE, title);
-        initialValues.put(KEY_BODY, body);
+        initialValues.put(KEY_ENTRY, entry);
+        //initialValues.put("date_added", Utils.getStringFromDate(date_added));
+        //initialValues.put("last_modified",);
+        initialValues.put("avatar_id", 1);
         
-        return db.insert("entries", null, initialValues);
+        //return _db.insert("entries", null, initialValues);
     	String query = String.format(
-    			"Insert  Into entries (entry,date_added,last_modified,avatar_id) Values('%s','%s')",
-    			body, avatarPassword);
+    			"Insert  Into entries (title,entry,date_added,last_modified,avatar_id) Values('%s','%s','%s',datetime('now'),'1')",
+    			title,entry,date_added);
     	Log.d(Utils.APPLICATION_LOG_KEY, query);
     	try {
-    	    db.execSQL(query);
+    	    _db.execSQL(query);
+    	    Log.d("", "row created...");
+    	    System.out.println("Row Created...");
     	} catch (SQLException e) {
     	    Log.e("Error creating new note", e.toString());
     	}
-    }*/
+    	return 1;
+    }
 
     public List<Avatar> getAllAvatars() {
 	SQLiteDatabase db = getReadableDatabase();
