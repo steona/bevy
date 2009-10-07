@@ -48,7 +48,6 @@ public class NoteEditActivity extends Activity {
        
         mTitleText = (EditText) findViewById(R.id.title);
         mBodyText = (EditText) findViewById(R.id.body);
-        //mDateText = (EditText) findViewById(R.id.DatePicker01);
         
         DatePicker dp = 
             (DatePicker) findViewById(R.id.DatePicker01);
@@ -58,9 +57,9 @@ public class NoteEditActivity extends Activity {
         mDay = dp.getDayOfMonth();
         
         mTimestamp = new StringBuilder()
+        .append(mYear).append("-")
         .append(mMonth + 1).append("-")
-        .append(mDay).append("-")
-        .append(mYear).append(" ")
+        .append(mDay).append(" ")
         .append("23").append(":")
         .append("12").append(":")
         .append("23");
