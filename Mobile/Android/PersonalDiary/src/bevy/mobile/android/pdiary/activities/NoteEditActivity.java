@@ -23,14 +23,20 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 public class NoteEditActivity extends Activity {
 
 	private EditText mTitleText;
     private EditText mBodyText;
+    private EditText mDateText;
     private Long mRowId;
     private PersonalDiaryDB mDbHelper;
+    private int mMonth;
+    private int mDay;
+    private int mYear;
+    private StringBuilder mTimestamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +48,24 @@ public class NoteEditActivity extends Activity {
        
         mTitleText = (EditText) findViewById(R.id.title);
         mBodyText = (EditText) findViewById(R.id.body);
+        //mDateText = (EditText) findViewById(R.id.DatePicker01);
+        
+        DatePicker dp = 
+            (DatePicker) findViewById(R.id.DatePicker01);
       
+        mMonth = dp.getMonth();
+        mYear = dp.getYear();
+        mDay = dp.getDayOfMonth();
+        
+        mTimestamp = new StringBuilder()
+        .append(mMonth + 1).append("-")
+        .append(mDay).append("-")
+        .append(mYear).append(" ")
+        .append("23").append(":")
+        .append("12").append(":")
+        .append("23");
+
+        
         Button confirmButton = (Button) findViewById(R.id.save);
        
         mRowId = savedInstanceState != null ? savedInstanceState.getLong(PersonalDiaryDB.KEY_ROWID) 
@@ -85,7 +108,7 @@ public class NoteEditActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        //saveState();
+        saveState();
     }
     
     @Override
@@ -94,18 +117,19 @@ public class NoteEditActivity extends Activity {
         //populateFields();
     }
     
-    /*private void saveState() {
+    private void saveState() {
         String title = mTitleText.getText().toString();
         String body = mBodyText.getText().toString();
+        String date = mTimestamp.toString();//mDateText.getText().toString();
 
         if (mRowId == null) {
-            long id = mDbHelper.createNote(title, body);
+            long id = mDbHelper.createNote(title, body, date);
             if (id > 0) {
                 mRowId = id;
             }
         } else {
-            mDbHelper.updateNote(mRowId, title, body);
+            //mDbHelper.updateNote(mRowId, title, body);
         }
-    }*/
+    }
     
 }
