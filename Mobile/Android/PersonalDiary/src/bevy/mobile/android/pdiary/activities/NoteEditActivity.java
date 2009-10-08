@@ -87,6 +87,7 @@ public class NoteEditActivity extends Activity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
 
         	public void onClick(View view) {
+        		saveState();
         	    setResult(RESULT_OK);
         	    finish();
         	}
@@ -127,7 +128,6 @@ public class NoteEditActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        saveState();
     }
     
     @Override
