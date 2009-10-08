@@ -29,11 +29,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class NoteEditActivity extends Activity {
 
 	private EditText mTitleText;
     private EditText mBodyText;
+    private TextView mDateDisplay;
     private Long mRowId;
     private PersonalDiaryDB mDbHelper;
     private int mMonth;
@@ -54,6 +56,8 @@ public class NoteEditActivity extends Activity {
         mTitleText = (EditText) findViewById(R.id.title);
         mBodyText = (EditText) findViewById(R.id.body);
         mPickDate = (Button) findViewById(R.id.pickDate);
+        mDateDisplay = (TextView) findViewById(R.id.date);
+        
      // add a click listener to the button
         mPickDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -110,6 +114,8 @@ public class NoteEditActivity extends Activity {
         .append("23").append(":")
         .append("12").append(":")
         .append("23");
+    	
+    	mDateDisplay.setText(mTimestamp);
     }
     
     @Override
