@@ -16,9 +16,13 @@
 
 package bevy.mobile.android.pdiary.activities;
 
+import java.util.Calendar;
+
 import bevy.mobile.android.pdiary.PersonalDiaryDB;
 import bevy.mobile.android.pdiary.R;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -30,14 +34,15 @@ public class NoteEditActivity extends Activity {
 
 	private EditText mTitleText;
     private EditText mBodyText;
-    private EditText mDateText;
     private Long mRowId;
     private PersonalDiaryDB mDbHelper;
     private int mMonth;
     private int mDay;
     private int mYear;
     private StringBuilder mTimestamp;
-
+    private Button mPickDate;
+    static final int DATE_DIALOG_ID = 0;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,23 +53,23 @@ public class NoteEditActivity extends Activity {
        
         mTitleText = (EditText) findViewById(R.id.title);
         mBodyText = (EditText) findViewById(R.id.body);
+        mPickDate = (Button) findViewById(R.id.pickDate);
+     // add a click listener to the button
+        mPickDate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showDialog(DATE_DIALOG_ID);
+            }
+        });
         
-        DatePicker dp = 
-            (DatePicker) findViewById(R.id.DatePicker01);
-      
-        mMonth = dp.getMonth();
-        mYear = dp.getYear();
-        mDay = dp.getDayOfMonth();
+        // get the current date
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        // display the current date
+        updateDisplay();
         
-        mTimestamp = new StringBuilder()
-        .append(mYear).append("-")
-        .append(mMonth + 1).append("-")
-        .append(mDay).append(" ")
-        .append("23").append(":")
-        .append("12").append(":")
-        .append("23");
-
-        
+         
         Button confirmButton = (Button) findViewById(R.id.save);
        
         mRowId = savedInstanceState != null ? savedInstanceState.getLong(PersonalDiaryDB.KEY_ROWID) 
@@ -75,8 +80,6 @@ public class NoteEditActivity extends Activity {
 									: null;
 		}
 
-		//populateFields();
-		
         confirmButton.setOnClickListener(new View.OnClickListener() {
 
         	public void onClick(View view) {
@@ -87,16 +90,27 @@ public class NoteEditActivity extends Activity {
         });
     }
     
-/*    private void populateFields() {
-        if (mRowId != null) {
-            Cursor note = mDbHelper.fetchNote(mRowId);
-            startManagingCursor(note);
-            mTitleText.setText(note.getString(
-    	            note.getColumnIndexOrThrow(PersonalDiaryDB.KEY_TITLE)));
-            mBodyText.setText(note.getString(
-                    note.getColumnIndexOrThrow(PersonalDiaryDB.KEY_BODY)));
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+        case DATE_DIALOG_ID:
+            return new DatePickerDialog(this,
+                        mDateSetListener,
+                        mYear, mMonth, mDay);
         }
-    }*/
+        return null;
+    }
+   
+ // updates the date we display in the TextView
+    private void updateDisplay() {
+    	mTimestamp = new StringBuilder()
+        .append(mYear).append("-")
+        .append(mMonth + 1).append("-")
+        .append(mDay).append(" ")
+        .append("23").append(":")
+        .append("12").append(":")
+        .append("23");
+    }
     
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -131,4 +145,16 @@ public class NoteEditActivity extends Activity {
         }
     }
     
+ // the callback received when the user "sets" the date in the dialog
+    private DatePickerDialog.OnDateSetListener mDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year, 
+                                      int monthOfYear, int dayOfMonth) {
+                    mYear = year;
+                    mMonth = monthOfYear;
+                    mDay = dayOfMonth;
+                    updateDisplay();
+                }
+            };
 }

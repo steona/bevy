@@ -123,14 +123,16 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
      public long createNote(String title, String entry, String date_added/*, Date last_modified, long avatar_id*/
     		 ) {
     	SQLiteDatabase _db = getWritableDatabase();
-        ContentValues initialValues = new ContentValues();
+        /*ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_TITLE, title);
         initialValues.put(KEY_ENTRY, entry);
-        //initialValues.put("date_added", Utils.getStringFromDate(date_added));
-        //initialValues.put("last_modified",);
+        initialValues.put("date_added", Utils.getStringFromDate(date_added));
+        initialValues.put("last_modified",);
         initialValues.put("avatar_id", 1);
         
-        //return _db.insert("entries", null, initialValues);
+        return _db.insert("entries", null, initialValues);*/
+    	
+    	//System.out.println("avatar id:"+ ge);
     	String query = String.format(
     			"Insert  Into entries (title,entry,date_added,last_modified,avatar_id) Values('%s','%s','%s',datetime('now'),'1')",
     			title,entry,date_added);

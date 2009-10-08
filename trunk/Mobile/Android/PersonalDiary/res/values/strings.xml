@@ -43,4 +43,5 @@ Developed by : Sandeep Soni [ http://sonisandeep.blogspot.com,
     <string name="body">Body</string>
     <string name="save">Save</string>
     <string name="date">Date</string>
+    <string name="pickDate">Choose Date</string>
 </resources>
