@@ -26,7 +26,7 @@ Developed by : Sandeep Soni [ http://sonisandeep.blogspot.com,
 		<Button android:id="@+id/prevMonthButton" android:text="@string/Previous"
 			android:layout_height="wrap_content" />
 		<TextView android:id="@+id/thisMonth" android:layout_height="wrap_content"
-			android:text="Cell 12" android:layout_width="150dip" android:gravity="center" />
+			android:layout_width="150dip" android:gravity="center" />
 		<Button android:id="@+id/nextMonthButton" android:text="@string/Next"
 			android:layout_height="wrap_content" />
 	</TableRow>

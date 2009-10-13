@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
+import android.widget.TextView;
 import bevy.mobile.android.pdiary.GridViewDayAdapter;
 import bevy.mobile.android.pdiary.PersonalDiaryDB;
 import bevy.mobile.android.pdiary.R;
@@ -38,7 +39,13 @@ import bevy.mobile.android.pdiary.R;
 public class MainScreen extends Activity {
 
     private PersonalDiaryDB _db;
-    
+    private TextView tv;
+
+    private static final String[] monthName = {"January", "February",
+    		           "March", "April", "May", "June", "July",
+    		            "August", "September", "October", "November",
+    		            "December"};
+    		 
     private static final int ACTIVITY_CREATE=0;
     private static final int ACTIVITY_EDIT=1;
     private static final int ACTIVITY_VIEW_ALL=2;
@@ -58,12 +65,19 @@ public class MainScreen extends Activity {
 	_db = new PersonalDiaryDB(this);
 	
 	setContentView(R.layout.main);
-	setUpCalendar();
+	
+	tv = (TextView) findViewById(R.id.thisMonth);
+	Calendar cal = Calendar.getInstance();
+	String month = monthName[cal.get(Calendar.MONTH)];
+	int year = cal.get(Calendar.YEAR);
+	month = month + "  "+ year;
+	tv.setText(month);
+	setUpCalendar(cal);
     }
 
-    private void setUpCalendar() {
+    private void setUpCalendar(Calendar cal) {
 	GridView calView = (GridView) findViewById(R.id.calGridView);
-	calView.setAdapter(new GridViewDayAdapter(this,Calendar.getInstance().getTime(),_db));
+	calView.setAdapter(new GridViewDayAdapter(this,cal.getTime(),_db));
     }
     
     @Override
