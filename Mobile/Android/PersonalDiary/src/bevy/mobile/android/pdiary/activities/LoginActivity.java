@@ -110,5 +110,14 @@ public class LoginActivity extends Activity implements OnClickListener {
 	    }
 	} 
     }
+    
+    @Override
+    protected void onDestroy(){
+    	super.onDestroy();
+    	if(_db != null) {
+    		_db.close();	
+    	}
+    }
+
 
 }
