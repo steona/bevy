@@ -116,6 +116,12 @@ public class MainScreen extends Activity {
         return super.onMenuItemSelected(featureId, item);
     }
     
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tv.refreshDrawableState();
+    }
+    
     private void createNote() {
         Intent i = new Intent(this, NoteEditActivity.class);
         startActivityForResult(i, ACTIVITY_EDIT);

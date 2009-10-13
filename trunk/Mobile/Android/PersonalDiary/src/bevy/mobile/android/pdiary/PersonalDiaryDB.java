@@ -133,7 +133,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
     	
     	//System.out.println("avatar id:"+ ge);
     	String query = String.format(
-    			"Insert  Into entries (title,entry,date_added,last_modified,avatar_id) Values('%s','%s',datetime('now'),datetime('now'),'1')",
+    			"Insert  Into entries (title,entry,date_added,last_modified,avatar_id) Values('%s','%s','%s',datetime('now'),'1')",
     			title,entry,date_added);
     	Log.d(Utils.APPLICATION_LOG_KEY, query);
     	try {

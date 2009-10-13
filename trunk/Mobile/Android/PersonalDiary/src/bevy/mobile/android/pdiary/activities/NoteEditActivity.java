@@ -122,10 +122,12 @@ public class NoteEditActivity extends Activity {
         
         mTimestamp.append("-");
         paddTwoDigits(mTimestamp,mDay);
-        mTimestamp.append(" ")
-        .append(mHH).append(":")
-        .append(mMM).append(":")
-        .append(mSS);
+        mTimestamp.append(" ");
+        paddTwoDigits(mTimestamp, mHH);
+        mTimestamp.append(":");
+        paddTwoDigits(mTimestamp,mMM);
+        mTimestamp.append(":");
+        paddTwoDigits(mTimestamp,mSS);
     	
     	mDateDisplay.setText(mTimestamp);
     }
