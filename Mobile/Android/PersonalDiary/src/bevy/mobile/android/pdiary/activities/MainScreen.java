@@ -41,6 +41,7 @@ public class MainScreen extends Activity {
     
     private static final int ACTIVITY_CREATE=0;
     private static final int ACTIVITY_EDIT=1;
+    private static final int ACTIVITY_VIEW_ALL=2;
     
     public static final int EDIT_ID = Menu.FIRST;
     public static final int HOME_ID = Menu.FIRST + 1;
@@ -93,6 +94,9 @@ public class MainScreen extends Activity {
         case EDIT_ID:
             createNote();
             return true;
+        case LIST_ID:
+        	listAllNotes();
+        	return true;
         }
        
         return super.onMenuItemSelected(featureId, item);
@@ -100,6 +104,11 @@ public class MainScreen extends Activity {
     
     private void createNote() {
         Intent i = new Intent(this, NoteEditActivity.class);
-        startActivityForResult(i, ACTIVITY_CREATE);
+        startActivityForResult(i, ACTIVITY_EDIT);
+    }
+    
+    private void listAllNotes(){
+    	Intent i = new Intent(this, ListAllNotesActivity.class);
+    	startActivityForResult(i, ACTIVITY_VIEW_ALL);
     }
 }
