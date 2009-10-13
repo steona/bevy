@@ -1,5 +1,13 @@
 package bevy.mobile.android.pdiary.activities;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +31,8 @@ public class ListAllNotesActivity extends ListActivity {
     public static final int DELETE_ID = Menu.FIRST + 1;
     private static final int ACTIVITY_CREATE=0;
     private long selectedItem = -1;
+    Map<Long,Integer> idMap = new HashMap<Long,Integer>();
+    
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -54,6 +64,17 @@ public class ListAllNotesActivity extends ListActivity {
        
         return super.onMenuItemSelected(featureId, item);
     }
+	
+	@Override
+    protected void onPause() {
+        super.onPause();
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showContent();
+    }	
     
     private void viewNote() {
         Intent i = new Intent(this, NoteViewActivity.class);
@@ -65,13 +86,25 @@ public class ListAllNotesActivity extends ListActivity {
     	if(mDbHelper==null){
     		mDbHelper = new PersonalDiaryDB(this);
     	}
-    	mDbHelper.deleteNote(++selectedItem);
+    	mDbHelper.deleteNote(selectedItem);
     	showContent();
     }
     
     private void showContent(){
 		
-		String[] notes = mDbHelper.getAllNotes();
+		Map<Integer,String> notesMap = mDbHelper.getAllNotes();
+		Set<Integer> keyList = notesMap.keySet();
+		Collection<String> titleColl = notesMap.values();
+		List<String> titleList = new ArrayList(titleColl);
+		String[] notes = new String[titleList.size()];
+		notes = titleList.toArray(notes);
+		
+		idMap.clear();
+		Iterator<Integer> it = keyList.iterator();
+		long value = 0;
+		while(it.hasNext()){
+			idMap.put(value++, it.next());
+		}
 		if(notes != null){
 		setListAdapter(new ArrayAdapter<String>(this,
 		          android.R.layout.simple_list_item_1, notes));
@@ -86,7 +119,8 @@ public class ListAllNotesActivity extends ListActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
 				Intent i = new Intent(c, NoteViewActivity.class);
-				i.putExtra("id", id);
+				int val = idMap.get(id);
+				i.putExtra("id", idMap.get(id));
 				c.startActivity(i);
 			}
 			  
@@ -97,7 +131,7 @@ public class ListAllNotesActivity extends ListActivity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
-				selectedItem = id;
+				selectedItem = idMap.get(id);
 				
 			}
 
