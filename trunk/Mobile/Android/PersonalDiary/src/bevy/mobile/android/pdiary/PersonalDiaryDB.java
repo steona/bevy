@@ -28,9 +28,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import bevy.mobile.android.pdiary.models.Avatar;
-import bevy.mobile.android.pdiary.models.DiaryEntry;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -41,6 +38,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQuery;
 import android.util.Log;
+import bevy.mobile.android.pdiary.models.Avatar;
+import bevy.mobile.android.pdiary.models.DiaryEntry;
 
 /**
  * @author Sandeep Soni
@@ -134,7 +133,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
     	
     	//System.out.println("avatar id:"+ ge);
     	String query = String.format(
-    			"Insert  Into entries (title,entry,date_added,last_modified,avatar_id) Values('%s','%s','%s',datetime('now'),'1')",
+    			"Insert  Into entries (title,entry,date_added,last_modified,avatar_id) Values('%s','%s',datetime('now'),datetime('now'),'1')",
     			title,entry,date_added);
     	Log.d(Utils.APPLICATION_LOG_KEY, query);
     	try {
@@ -225,6 +224,32 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 
 	return days;
     }
+    
+    public String[] getAllNotes(){
+    	SQLiteDatabase db = getReadableDatabase();
+    	List<String> notesList = new ArrayList<String>();
+    	String [] notes = null;
+    	String [] columns = {"title"};
+    	Cursor c = db.query("entries",columns,null,null,null,null,null);
+    	if (c != null) {
+    		int colindex1 = c.getColumnIndexOrThrow("title");
+    		int count = c.getCount();
+    		notes = new String[count];
+            if (c.moveToFirst()) {
+            	int index = 0;
+                 do {
+                	 notes[index++] = c.getString(colindex1);
+                 } while (c.moveToNext());
+            }
+       }
+    	db.close();
+    	return notes;
+    }
+    
+    public void deleteNote(int id){
+    	SQLiteDatabase db = getWritableDatabase();
+    	db.delete("entries", "id="+id, null);
+    }
 
     public static class AvatarCursor extends SQLiteCursor {
 
@@ -264,6 +289,8 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 		+ "ORDER BY date_added";
 
 	private static final String QUERY_MONTHLY = "select date_added from entries where date_added between '%MONTH_START%' and '%MONTH_END%'";
+	
+	private static final String ALL = "Select title, date_added from entries";
 
 	public DiaryEntryCursor(SQLiteDatabase db, SQLiteCursorDriver driver,
 		String editTable, SQLiteQuery query) {

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+	<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		  
+		<TextView 
+			android:text="Title:  " 
+			android:id="@+id/title" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" 
+			android:textColor="#00FF00">
+		</TextView>
+		
+		<TextView 
+			android:text="" 
+			android:id="@+id/titlevalue" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:textColor="#FF0000"
+			>
+		</TextView>
+	</LinearLayout>
+	
+	<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<TextView 
+			android:text="Created Date:  " 
+			android:id="@+id/created" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" android:textColor="#00FF00">
+		</TextView>
+		
+		<TextView 
+			android:text="" 
+			android:id="@+id/createdvalue" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:textColor="#FF0000"			 
+			>
+		</TextView>
+
+	</LinearLayout>
+
+	<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		
+		<TextView 
+			android:text="Last Modified:  " 
+			android:id="@+id/lastmodified" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" android:textColor="#00FF00">
+		</TextView>
+		
+		<TextView 
+			android:text="" 
+			android:id="@+id/lastmodifiedvalue" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:textColor="#FF0000"			 
+			>
+		</TextView>
+	</LinearLayout>
+
+	<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:text="Body: " android:textColor="#00FF00"/>
+
+	</LinearLayout>
+	
+	<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:text=""
+			android:id="@+id/bodyvalue"
+			android:textColor="#FF0000"			
+			/>
+
+	</LinearLayout>
+</LinearLayout>
