@@ -40,7 +40,10 @@ public class NoteEditActivity extends Activity {
     private PersonalDiaryDB mDbHelper;
     private int mMonth;
     private int mDay;
-    private int mYear;
+    private int mYear;   
+    private int mHH;
+    private int mMM;
+    private int mSS;
     private StringBuilder mTimestamp;
     private Button mPickDate;
     static final int DATE_DIALOG_ID = 0;
@@ -67,9 +70,13 @@ public class NoteEditActivity extends Activity {
         
         // get the current date
         final Calendar c = Calendar.getInstance();
+        
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
+        mHH = c.get(Calendar.HOUR_OF_DAY);
+        mMM = c.get(Calendar.MINUTE);
+        mSS = c.get(Calendar.SECOND);
         // display the current date
         updateDisplay();
         
@@ -109,12 +116,16 @@ public class NoteEditActivity extends Activity {
  // updates the date we display in the TextView
     private void updateDisplay() {
     	mTimestamp = new StringBuilder()
-        .append(mYear).append("-")
-        .append(mMonth + 1).append("-")
-        .append(mDay).append(" ")
-        .append("23").append(":")
-        .append("12").append(":")
-        .append("23");
+        .append(mYear).append("-");
+        
+    	paddTwoDigits(mTimestamp, mMonth + 1);
+        
+        mTimestamp.append("-");
+        paddTwoDigits(mTimestamp,mDay);
+        mTimestamp.append(" ")
+        .append(mHH).append(":")
+        .append(mMM).append(":")
+        .append(mSS);
     	
     	mDateDisplay.setText(mTimestamp);
     }
@@ -149,7 +160,24 @@ public class NoteEditActivity extends Activity {
         } else {
             //mDbHelper.updateNote(mRowId, title, body);
         }
+        
     }
+    
+    /**
+	 * Padds a number with an extra zero if it is less than 10
+	 * 
+	 */
+	private static void paddTwoDigits(StringBuilder sBuilder, int number) {
+		
+		if(number < 10) {
+			sBuilder.append("0");
+			sBuilder.append(number);
+		}
+		else {
+			sBuilder.append(number);
+		}
+	}
+
     
  // the callback received when the user "sets" the date in the dialog
     private DatePickerDialog.OnDateSetListener mDateSetListener =
