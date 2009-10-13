@@ -25,10 +25,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -80,6 +81,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 	    Log.e("Error creating tables and debug data", e.toString());
 	} finally {
 	    db.endTransaction();
+	    db.close();
 	}
 
     }
@@ -107,6 +109,8 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 	    db.execSQL(query);
 	} catch (SQLException e) {
 	    Log.e("Error creating new account", e.toString());
+	} finally{
+		db.close();
 	}
     }
     
@@ -142,10 +146,44 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
     	    System.out.println("Row Created...");
     	} catch (SQLException e) {
     	    Log.e("Error creating new note", e.toString());
+    	} finally{
+    		_db.close();
     	}
     	return 1;
+    	
     }
 
+	public long updateNote(long id, String title, String entry) {
+		SQLiteDatabase _db = getWritableDatabase();
+		/*ContentValues initialValues = new ContentValues();
+		initialValues.put(KEY_TITLE, title);
+		initialValues.put(KEY_ENTRY, entry);
+		initialValues.put("date_added", Utils.getStringFromDate(date_added));
+		initialValues.put("last_modified",);
+		initialValues.put("avatar_id", 1);
+		
+		return _db.insert("entries", null, initialValues);*/
+		
+		//System.out.println("avatar id:"+ ge);
+//		String query1 = String.format(
+//				"Insert  Into entries (title,entry,date_added,last_modified,avatar_id) Values('%s','%s','%s',datetime('now'),'1')",
+//				title,entry);
+		String query =String.format("Update entries set title='%s',entry='%s',last_modified=datetime('now') where id='%d'",title,entry,id);
+		Log.d(Utils.APPLICATION_LOG_KEY, query);
+		try {
+		    _db.execSQL(query);
+		    Log.d("", "row updated...");
+		    System.out.println("Row Updated...");
+		} catch (SQLException e) {
+		    Log.e("Error updating new note", e.toString());
+		} finally{
+			_db.close();
+		}
+		return 1;
+	
+	}
+     
+     
     public List<Avatar> getAllAvatars() {
 	SQLiteDatabase db = getReadableDatabase();
 	List<Avatar> avatars = new ArrayList<Avatar>();
@@ -160,6 +198,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 	    avatars.add(a);
 	    c.moveToNext();
 	}
+	db.close();
 	return avatars;
     }
 
@@ -182,6 +221,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 	    a.setPassword(c.getColPassword());
 	}
 
+	db.close();
 	return a;
     }
 
@@ -199,7 +239,9 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 		new DiaryEntryCursor.Factory(), DiaryEntryCursor.QUERY, null,
 		null);
 
+	db.close();
 	return entries;
+	
     }
 
     public List<String> getDaysHavingEventsInMonth(Date time) {
@@ -222,23 +264,26 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 	    c.moveToNext();
 	}
 
+	db.close();
 	return days;
     }
     
-    public String[] getAllNotes(){
+    public Map<Integer,String> getAllNotes(){
     	SQLiteDatabase db = getReadableDatabase();
     	List<String> notesList = new ArrayList<String>();
-    	String [] notes = null;
-    	String [] columns = {"title"};
+    	Map<Integer,String> notes = null;
+    	String [] columns = {"id","title"};
     	Cursor c = db.query("entries",columns,null,null,null,null,null);
     	if (c != null) {
-    		int colindex1 = c.getColumnIndexOrThrow("title");
-    		int count = c.getCount();
-    		notes = new String[count];
+    		int colindex1 = c.getColumnIndexOrThrow("id");
+    		int colindex2 = c.getColumnIndexOrThrow("title");
+    		notes = new HashMap<Integer,String>(); 
             if (c.moveToFirst()) {
             	int index = 0;
                  do {
-                	 notes[index++] = c.getString(colindex1);
+                	 int id = c.getInt(colindex1);
+                	 String title = c.getString(colindex2);
+                	 notes.put(id, title);
                  } while (c.moveToNext());
             }
        }
@@ -249,6 +294,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
     public void deleteNote(long id){
     	SQLiteDatabase db = getWritableDatabase();
     	db.delete("entries", "id="+id, null);
+    	db.close();
     }
 
     public static class AvatarCursor extends SQLiteCursor {

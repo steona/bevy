@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -47,6 +48,7 @@ public class NoteEditActivity extends Activity {
     private StringBuilder mTimestamp;
     private Button mPickDate;
     static final int DATE_DIALOG_ID = 0;
+    private long id = -1;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,34 @@ public class NoteEditActivity extends Activity {
         mBodyText = (EditText) findViewById(R.id.body);
         mPickDate = (Button) findViewById(R.id.pickDate);
         mDateDisplay = (TextView) findViewById(R.id.date);
+        
+        Bundle extra = getIntent().getExtras();
+		if(extra != null){
+			id = extra.getLong("id");
+			if(id >= 0){
+				SQLiteDatabase db = mDbHelper.getReadableDatabase();
+				Cursor c = db.query("entries", null, "id = "+id, null, null, null, null);
+				if(c.moveToFirst()){
+					String title = c.getString(c.getColumnIndex("title"));
+					String createdDate = c.getString(c.getColumnIndex("date_added"));
+					String body = c.getString(c.getColumnIndex("entry"));
+					String lastModified = c.getString(c.getColumnIndex("last_modified"));
+					if(title != null){
+						mTitleText.setText(title);
+						
+					}
+	//				if(createdDate != null){
+	//					mCreatedDateValue.setText(createdDate);
+	//				}
+					if(body != null){
+						mBodyText.setText(body);
+					}
+					if(lastModified != null){
+						mDateDisplay.setText(lastModified);
+					}
+				}
+			}
+		}
         
      // add a click listener to the button
         mPickDate.setOnClickListener(new View.OnClickListener() {
@@ -154,13 +184,13 @@ public class NoteEditActivity extends Activity {
         String body = mBodyText.getText().toString();
         String date = mTimestamp.toString();//mDateText.getText().toString();
 
-        if (mRowId == null) {
+        if (id <= 0) {
             long id = mDbHelper.createNote(title, body, date);
             if (id > 0) {
                 mRowId = id;
             }
         } else {
-            //mDbHelper.updateNote(mRowId, title, body);
+            mDbHelper.updateNote(id, title, body);
         }
         
     }
