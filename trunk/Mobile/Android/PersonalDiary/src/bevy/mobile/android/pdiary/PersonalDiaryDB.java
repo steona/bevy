@@ -246,7 +246,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
     	return notes;
     }
     
-    public void deleteNote(int id){
+    public void deleteNote(long id){
     	SQLiteDatabase db = getWritableDatabase();
     	db.delete("entries", "id="+id, null);
     }
