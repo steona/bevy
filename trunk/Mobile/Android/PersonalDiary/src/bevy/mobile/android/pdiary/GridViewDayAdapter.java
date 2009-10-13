@@ -26,6 +26,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,17 +113,19 @@ public class GridViewDayAdapter extends BaseAdapter implements ListAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
 	TextView tv;
-
+	position = position + 1;
 	if (convertView == null) {
 	    tv = new TextView(_context);
 	    tv.setText(position + "");
+	    tv.setClickable(true);
+	    
 
 	} else {
 	    tv = (TextView) convertView;
 	}
 
 	if (dayHasEvents(position)) {
-	    tv.append("\n.");
+		tv.setBackgroundColor(Color.GRAY);
 	}
 
 	tv.setMinLines(3);
