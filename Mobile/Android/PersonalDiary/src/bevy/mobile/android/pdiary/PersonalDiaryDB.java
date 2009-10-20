@@ -81,7 +81,6 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 	    Log.e("Error creating tables and debug data", e.toString());
 	} finally {
 	    db.endTransaction();
-	    db.close();
 	}
 
     }
@@ -109,9 +108,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 	    db.execSQL(query);
 	} catch (SQLException e) {
 	    Log.e("Error creating new account", e.toString());
-	} finally{
-		db.close();
-	}
+	} 
     }
     
     /**
@@ -146,9 +143,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
     	    System.out.println("Row Created...");
     	} catch (SQLException e) {
     	    Log.e("Error creating new note", e.toString());
-    	} finally{
-    		_db.close();
-    	}
+    	} 
     	return 1;
     	
     }
@@ -176,9 +171,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 		    System.out.println("Row Updated...");
 		} catch (SQLException e) {
 		    Log.e("Error updating new note", e.toString());
-		} finally{
-			_db.close();
-		}
+		} 
 		return 1;
 	
 	}
@@ -198,7 +191,6 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 	    avatars.add(a);
 	    c.moveToNext();
 	}
-	db.close();
 	return avatars;
     }
 
@@ -221,27 +213,62 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 	    a.setPassword(c.getColPassword());
 	}
 
-	db.close();
 	return a;
     }
 
     public List<DiaryEntry> getEntriesForDay(Date d) {
-	DateFormat df = DateFormat.getDateInstance();
-	String dateStr = df.format(d);
-
-	String query = DiaryEntryCursor.QUERY;
-	query.replace("%DATE%", dateStr);
-
-	List<DiaryEntry> entries = new LinkedList<DiaryEntry>();
-
-	SQLiteDatabase db = getReadableDatabase();
-	DiaryEntryCursor c = (DiaryEntryCursor) db.rawQueryWithFactory(
-		new DiaryEntryCursor.Factory(), DiaryEntryCursor.QUERY, null,
-		null);
-
-	db.close();
-	return entries;
+    	try{
+			DateFormat df = DateFormat.getDateInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			System.out.println("sdf format is "+sdf.format(d));
+			String dateStr = sdf.format(d);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(d);
+			int ndate = cal.get(Calendar.DATE)+1;
+			cal.set(Calendar.DATE,ndate);
+			Date nextdate = cal.getTime();
+			String nextDateStr = sdf.format(nextdate);
+			
+		
+			String query = DiaryEntryCursor.QUERY;
+			query = query.replace("%ADDED_DATE%", dateStr);
+			query = query.replace("%NEXT_DATE%", nextDateStr);
+			System.out.println(query);
+			List<DiaryEntry> entries = new LinkedList<DiaryEntry>();
+		
+			SQLiteDatabase db = getReadableDatabase();
+			DiaryEntryCursor c = (DiaryEntryCursor) db.rawQueryWithFactory(
+				new DiaryEntryCursor.Factory(), query, null,
+				null);
+			
+			if(c != null){
+				if (c.moveToFirst()) {
+		        	int index = 0;
+		             do {
+		            	 DiaryEntry de = new DiaryEntry();
+		            	 System.out.println("No. of Columns = "+c.getColumnCount());
+		            	 int id = c.getInt(c.getColumnIndexOrThrow("id"));
+		            	 String title = c.getString(c.getColumnIndexOrThrow("title"));
+		            	 String entry = c.getString(c.getColumnIndexOrThrow("entry"));
+		            	 String date_added = c.getString(c.getColumnIndexOrThrow("date_added"));
+		            	 Date createdDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS").parse(date_added);
+		            	 Date lastModified = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS").parse(c.getString(c.getColumnIndexOrThrow("last_modified")));
+		            	 de.setId(id);
+		            	 de.setTitle(title);
+		            	 de.setEntry(entry);
+		            	 de.setCreatedDate(createdDate);
+		            	 de.setLastModified(lastModified);
+		            	 entries.add(de);
+		             } while (c.moveToNext());
+		        }
+			}
+		
+			return entries;
+    	}catch(Exception ex){
+    		System.out.println(ex.getMessage());
+    	}
 	
+    	return null;
     }
 
     public List<String> getDaysHavingEventsInMonth(Date time) {
@@ -264,7 +291,6 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 	    c.moveToNext();
 	}
 
-	db.close();
 	return days;
     }
     
@@ -287,14 +313,12 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
                  } while (c.moveToNext());
             }
        }
-    	db.close();
     	return notes;
     }
     
     public void deleteNote(long id){
     	SQLiteDatabase db = getWritableDatabase();
     	db.delete("entries", "id="+id, null);
-    	db.close();
     }
 
     public static class AvatarCursor extends SQLiteCursor {
@@ -330,8 +354,8 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
     }
 
     public static class DiaryEntryCursor extends SQLiteCursor {
-	private static final String QUERY = "SELECT id, entry, date_added,last_modified,avatar_id "
-		+ "FROM entries where date_added = '%DATE%'"
+	private static final String QUERY = "SELECT id, title, entry, date_added,last_modified,avatar_id "
+		+ "FROM entries where date_added >= '%ADDED_DATE%' and date_added < '%NEXT_DATE%' "
 		+ "ORDER BY date_added";
 
 	private static final String QUERY_MONTHLY = "select date_added from entries where date_added between '%MONTH_START%' and '%MONTH_END%'";
