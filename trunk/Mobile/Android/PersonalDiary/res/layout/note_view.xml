@@ -24,7 +24,7 @@
 			android:id="@+id/titlevalue" 
 			android:layout_width="wrap_content" 
 			android:layout_height="wrap_content"
-			android:textColor="#FF0000"
+			android:textColor="#FFFFFF"
 			>
 		</TextView>
 	</LinearLayout>
@@ -47,7 +47,7 @@
 			android:id="@+id/createdvalue" 
 			android:layout_width="wrap_content" 
 			android:layout_height="wrap_content"
-			android:textColor="#FF0000"			 
+			android:textColor="#FFFFFF"			 
 			>
 		</TextView>
 
@@ -71,7 +71,7 @@
 			android:id="@+id/lastmodifiedvalue" 
 			android:layout_width="wrap_content" 
 			android:layout_height="wrap_content"
-			android:textColor="#FF0000"			 
+			android:textColor="#FFFFFF"			 
 			>
 		</TextView>
 	</LinearLayout>
@@ -96,7 +96,7 @@
 			android:layout_height="wrap_content" 
 			android:text=""
 			android:id="@+id/bodyvalue"
-			android:textColor="#FF0000"			
+			android:textColor="#FFFFFF"			
 			/>
 
 	</LinearLayout>

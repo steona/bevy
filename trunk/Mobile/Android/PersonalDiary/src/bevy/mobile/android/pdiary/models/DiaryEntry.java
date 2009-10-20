@@ -27,10 +27,20 @@ import java.util.Date;
 
 public class DiaryEntry {
     private String _entry;
+    private String _title;
     private Date _createdDate;
     private Date _lastModified;
     private Avatar _createdBy;
+    private int _id;
 
+    public String getTitle() {
+    	return _title;
+    }
+
+    public void setTitle(String title) {
+    	this._title = title;
+    }
+        
     public String getEntry() {
 	return _entry;
     }
@@ -62,4 +72,12 @@ public class DiaryEntry {
     public void setCreatedBy(Avatar createdBy) {
 	this._createdBy = createdBy;
     }
+
+	public void setId(int id) {
+		this._id = id;
+	}
+
+	public int getId() {
+		return _id;
+	}
 }
