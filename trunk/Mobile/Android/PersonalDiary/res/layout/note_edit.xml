@@ -39,13 +39,19 @@
 		android:layout_weight="1"
 		android:scrollbars="vertical" android:gravity="top"/>
 	
-	<Button android:id="@+id/save" 
-	  android:text="@string/save"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" />
-
-
-
-
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<Button android:id="@+id/save" 
+		  android:text="@string/save"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+			
+		<Button android:id="@+id/cancel" 
+		  android:text="@string/cancel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:layout_gravity="right"/>
+	</LinearLayout>
 
 </LinearLayout>
