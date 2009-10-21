@@ -133,7 +133,7 @@ public class ListNotesForDayActivity extends ListActivity {
 		while(it.hasNext()){
 			idMap.put(value++, it.next());
 		}
-		if(notes != null){
+		if(notes != null && notes.length > 0){
 		setListAdapter(new ArrayAdapter<String>(this,
 		          android.R.layout.simple_list_item_1, notes));
 		  getListView().setTextFilterEnabled(true);
@@ -172,11 +172,15 @@ public class ListNotesForDayActivity extends ListActivity {
 		  });
 		  		  
 		}else{
-			notes = new String[1];
-			notes[0] = "There are no entries";
-			setListAdapter(new ArrayAdapter<String>(this,
-			      android.R.layout.simple_list_item_1, notes));
-			getListView().setTextFilterEnabled(true);
+			Intent i = new Intent(this,NoteEditActivity.class);
+			i.putExtra("date", dateString);
+			this.startActivity(i);
+			finish();
+//			notes = new String[1];
+//			notes[0] = "No notes present";
+//			setListAdapter(new ArrayAdapter<String>(this,
+//			      android.R.layout.simple_list_item_1, notes));
+//			getListView().setTextFilterEnabled(true);
 		}
    	
     }
