@@ -31,12 +31,12 @@ public class ListNotesForDayActivity extends ListActivity {
 
 	private PersonalDiaryDB mDbHelper;
 	
-	public static final int VIEW_ID = Menu.FIRST;
+	public static final int NEW_NOTE = Menu.FIRST;
     public static final int DELETE_ID = Menu.FIRST + 1;
     private static final int ACTIVITY_CREATE=0;
     private long selectedItem = -1;
     Map<Long,Integer> idMap = new HashMap<Long,Integer>();
-    
+    private String dateString = "";
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -48,7 +48,7 @@ public class ListNotesForDayActivity extends ListActivity {
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
 	super.onCreateOptionsMenu(menu);
-	menu.add(0, VIEW_ID, 0, R.string.menu_edit).setShortcut('1', 'e')
+	menu.add(0, NEW_NOTE, 0, R.string.menu_edit).setShortcut('1', 'e')
 	    .setIcon(R.drawable.icon_delete);
 	menu.add(0, DELETE_ID, 0, R.string.menu_delete).setShortcut('2', 'h')
 	    .setIcon(R.drawable.icon_delete);
@@ -58,8 +58,8 @@ public class ListNotesForDayActivity extends ListActivity {
 	@Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         switch(item.getItemId()) {
-        case VIEW_ID:
-            viewNote();
+        case NEW_NOTE:
+            newNote();
             return true;
         case DELETE_ID:
         	deleteNote();
@@ -80,8 +80,9 @@ public class ListNotesForDayActivity extends ListActivity {
         showContent();
     }	
     
-    private void viewNote() {
-        Intent i = new Intent(this, NoteViewActivity.class);
+    private void newNote() {
+        Intent i = new Intent(this, NoteEditActivity.class);
+        i.putExtra("date", dateString);
         startActivityForResult(i, ACTIVITY_CREATE);
     }
     
@@ -97,7 +98,7 @@ public class ListNotesForDayActivity extends ListActivity {
     private void showContent(){
     	
 		Bundle extras = getIntent().getExtras();
-		String dateString = "";
+		
 		if(extras!=null){
 			 dateString = extras.getString("date");
 			 System.out.println("dateString = "+dateString);

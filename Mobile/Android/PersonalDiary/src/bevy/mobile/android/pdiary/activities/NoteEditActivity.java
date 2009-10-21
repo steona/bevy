@@ -16,10 +16,11 @@
 
 package bevy.mobile.android.pdiary.activities;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
-import bevy.mobile.android.pdiary.PersonalDiaryDB;
-import bevy.mobile.android.pdiary.R;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -31,6 +32,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import bevy.mobile.android.pdiary.PersonalDiaryDB;
+import bevy.mobile.android.pdiary.R;
 
 public class NoteEditActivity extends Activity {
 
@@ -49,6 +52,8 @@ public class NoteEditActivity extends Activity {
     private Button mPickDate;
     static final int DATE_DIALOG_ID = 0;
     private long id = -1;
+    private String dateStr = "";
+    private Calendar c;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,7 @@ public class NoteEditActivity extends Activity {
         Bundle extra = getIntent().getExtras();
 		if(extra != null){
 			id = extra.getLong("id");
+			dateStr = extra.getString("date");
 			if(id >= 0){
 				SQLiteDatabase db = mDbHelper.getReadableDatabase();
 				Cursor c = db.query("entries", null, "id = "+id, null, null, null, null);
@@ -89,6 +95,7 @@ public class NoteEditActivity extends Activity {
 					}
 				}
 			}
+			
 		}
         
      // add a click listener to the button
@@ -99,9 +106,17 @@ public class NoteEditActivity extends Activity {
         });
         
         // get the current date
-        final Calendar c = Calendar.getInstance();
-        
-        mYear = c.get(Calendar.YEAR);
+        c = Calendar.getInstance();
+        if(dateStr != null && !dateStr.equals("")){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				Date date = sdf.parse(dateStr);
+				c.setTime(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
         mHH = c.get(Calendar.HOUR_OF_DAY);
