@@ -145,6 +145,15 @@ public class NoteEditActivity extends Activity {
         	}
           
         });
+        
+        Button cancelButton = (Button) findViewById(R.id.cancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
     }
     
     @Override
