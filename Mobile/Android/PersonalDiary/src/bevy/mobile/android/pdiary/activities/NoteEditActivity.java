@@ -133,6 +133,14 @@ public class NoteEditActivity extends Activity {
     }
     
     @Override
+    protected void onDestroy(){
+    	super.onDestroy();
+    	if(mDbHelper != null)
+    		mDbHelper.close();
+    }
+
+    
+    @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
         case DATE_DIALOG_ID:

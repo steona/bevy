@@ -26,6 +26,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import bevy.mobile.android.pdiary.GridViewDayAdapter;
@@ -40,6 +42,9 @@ public class MainScreen extends Activity {
 
     private PersonalDiaryDB _db;
     private TextView tv;
+    private Button mPrev;
+    private Button mNext;
+    private Calendar _cal;
 
     private static final String[] monthName = {"January", "February",
     		           "March", "April", "May", "June", "July",
@@ -65,15 +70,41 @@ public class MainScreen extends Activity {
 	_db = new PersonalDiaryDB(this);
 	
 	setContentView(R.layout.main);
+	_cal = Calendar.getInstance();
+	mPrev = (Button) findViewById(R.id.prevMonthButton);
+	mNext = (Button) findViewById(R.id.nextMonthButton);
 	
-	tv = (TextView) findViewById(R.id.thisMonth);
-	Calendar cal = Calendar.getInstance();
-	String month = monthName[cal.get(Calendar.MONTH)];
-	int year = cal.get(Calendar.YEAR);
-	month = month + "  "+ year;
-	tv.setText(month);
-	setUpCalendar(cal);
-    }
+	// add a click listener to the Previous button
+    mPrev.setOnClickListener(new View.OnClickListener() {
+        public void onClick(View v) {
+            _cal.add(Calendar.MONTH, -1);
+        	System.out.println("Current time: " + _cal.getTime());
+        	showContent(_cal);
+        }
+    });
+    
+    // add a click listener to the Next button
+    mNext.setOnClickListener(new View.OnClickListener() {
+        public void onClick(View v) {
+        	_cal.add(Calendar.MONTH, +1);
+        	System.out.println("Current time: " + _cal.getTime());
+        	showContent(_cal);        	
+        }
+    });
+    
+    
+	showContent(_cal);
+	}
+
+	private void showContent(Calendar cal) {
+		tv = (TextView) findViewById(R.id.thisMonth);
+		
+		String month = monthName[cal.get(Calendar.MONTH)];
+		int year = cal.get(Calendar.YEAR);
+		month = month + "  "+ year;
+		tv.setText(month);
+		setUpCalendar(cal);
+	}
 
     private void setUpCalendar(Calendar cal) {
 	GridView calView = (GridView) findViewById(R.id.calGridView);
@@ -119,7 +150,7 @@ public class MainScreen extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        tv.refreshDrawableState();
+        showContent(_cal);
     }
     
     private void createNote() {
