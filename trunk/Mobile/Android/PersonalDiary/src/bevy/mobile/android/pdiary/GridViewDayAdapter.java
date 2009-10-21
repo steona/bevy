@@ -155,7 +155,7 @@ public class GridViewDayAdapter extends BaseAdapter implements ListAdapter {
 	}
 
 	if (dayHasEvents(position)) {
-		tv.setBackgroundColor(Color.GRAY);
+		tv.setTextColor(Color.GREEN);
 	}
 
 	tv.setMinLines(3);
