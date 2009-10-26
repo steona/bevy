@@ -191,6 +191,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 	    avatars.add(a);
 	    c.moveToNext();
 	}
+	c.close();
 	return avatars;
     }
 
@@ -213,6 +214,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 	    a.setPassword(c.getColPassword());
 	}
 
+	c.close();
 	return a;
     }
 
@@ -262,7 +264,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 		             } while (c.moveToNext());
 		        }
 			}
-		
+			c.close();
 			return entries;
     	}catch(Exception ex){
     		System.out.println(ex.getMessage());
@@ -290,7 +292,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
 	    }
 	    c.moveToNext();
 	}
-
+	c.close();
 	return days;
     }
     
@@ -313,6 +315,7 @@ public class PersonalDiaryDB extends SQLiteOpenHelper {
                  } while (c.moveToNext());
             }
        }
+    	c.close();
     	return notes;
     }
     

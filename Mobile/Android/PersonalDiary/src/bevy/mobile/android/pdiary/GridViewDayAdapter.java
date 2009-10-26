@@ -22,24 +22,18 @@ package bevy.mobile.android.pdiary;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import bevy.mobile.android.pdiary.activities.ListNotesForDayActivity;
-import bevy.mobile.android.pdiary.models.DiaryEntry;
 
 /**
  * @author Sandeep Soni
@@ -53,6 +47,7 @@ public class GridViewDayAdapter extends BaseAdapter implements ListAdapter {
     
     private List<String> _daysHavingEvents;
     SimpleDateFormat _sdf = new SimpleDateFormat();
+    private String dateStr = "";
     
     
     public GridViewDayAdapter(Context c, Date date, PersonalDiaryDB db) {
@@ -123,33 +118,8 @@ public class GridViewDayAdapter extends BaseAdapter implements ListAdapter {
 	position = position + 1;
 	if (convertView == null) {
 	    tv = new TextView(_context);
+	    tv.setGravity(Gravity.CENTER);
 	    tv.setText(position + "");
-	    tv.setClickable(true);
-	    final Context c = tv.getContext();
-	    tv.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				try{
-					TextView textView = (TextView)v;
-					String date = Utils.getStringFromDate(_cal.getTime());
-					int position = new Integer(textView.getText().toString()).intValue();
-					String dateStr = date.replaceFirst("[0-9]{2}$", String.format("%02d",position));
-					
-					Intent i = new Intent(c,ListNotesForDayActivity.class);
-					i.putExtra("date", dateStr);
-					c.startActivity(i);
-					
-				}catch(Exception ex){
-					
-				}
-				
-				
-				
-			}
-		});
-	    
-
 	} else {
 	    tv = (TextView) convertView;
 	}

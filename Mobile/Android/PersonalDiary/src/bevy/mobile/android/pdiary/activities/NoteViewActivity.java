@@ -30,7 +30,6 @@ public class NoteViewActivity extends Activity {
 	@Override 
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		show();
 	}
 	
 	@Override
@@ -57,13 +56,12 @@ public class NoteViewActivity extends Activity {
         return super.onMenuItemSelected(featureId, item);
     }
 	
-//	@Override
-//	public boolean onResume(){
-//		
-//	}
 	@Override
     protected void onPause() {
         super.onPause();
+    	if(mDbHelper != null){
+    		mDbHelper.close();
+    	}
     }
     
     @Override
@@ -72,6 +70,13 @@ public class NoteViewActivity extends Activity {
         show();
     }
     
+    @Override
+    protected void onDestroy(){
+    	super.onDestroy();
+    	if(mDbHelper != null){
+    		mDbHelper.close();
+    	}
+    }
 	private void editNote(){
 		Intent i = new Intent(this, NoteEditActivity.class);
 		i.putExtra("id", id);
@@ -115,6 +120,7 @@ public class NoteViewActivity extends Activity {
 					mLastModifiedValue.setText(lastModified);
 				}
 			}
+			c.close();
 			
 		}		
 	}
