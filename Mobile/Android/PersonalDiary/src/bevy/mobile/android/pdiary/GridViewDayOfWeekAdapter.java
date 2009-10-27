@@ -1,6 +1,5 @@
 package bevy.mobile.android.pdiary;
 
-import bevy.mobile.android.pdiary.R.color;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
