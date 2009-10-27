@@ -123,12 +123,14 @@ public class GridViewDayAdapter extends BaseAdapter implements ListAdapter {
 	} else {
 	    tv = (TextView) convertView;
 	}
-
+	tv.setBackgroundResource(R.drawable.grid);
+	tv.setTextColor(Color.BLACK);
 	if (dayHasEvents(position)) {
-		tv.setTextColor(Color.GREEN);
+		tv.setBackgroundResource(R.drawable.grid_event);
 	}
 
 	tv.setMinLines(3);
+	tv.setGravity(Gravity.CENTER);
 	return tv;
     }
 

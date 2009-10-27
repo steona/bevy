@@ -34,7 +34,9 @@ import java.util.Set;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +47,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import bevy.mobile.android.pdiary.GridViewDayAdapter;
 import bevy.mobile.android.pdiary.GridViewDayNotesAdapter;
+import bevy.mobile.android.pdiary.GridViewDayOfWeekAdapter;
 import bevy.mobile.android.pdiary.PersonalDiaryDB;
 import bevy.mobile.android.pdiary.R;
 import bevy.mobile.android.pdiary.Utils;
@@ -62,12 +65,12 @@ public class MainScreen extends Activity implements AdapterView.OnItemClickListe
     private Button mNext;
     private Calendar _cal;
     private String currentSelectedDateString = "";
-
+    
     private static final String[] monthName = {"January", "February",
     		           "March", "April", "May", "June", "July",
     		            "August", "September", "October", "November",
     		            "December"};
-    		 
+
     private static final int ACTIVITY_CREATE=0;
     private static final int ACTIVITY_EDIT=1;
     private static final int ACTIVITY_VIEW_ALL=2;
@@ -112,8 +115,7 @@ public class MainScreen extends Activity implements AdapterView.OnItemClickListe
         }
     });
     
-    
-	//showContent(_cal);
+    //showContent(_cal);
 	}
 
 	private void showContent(Calendar cal) {
@@ -123,9 +125,17 @@ public class MainScreen extends Activity implements AdapterView.OnItemClickListe
 		int year = cal.get(Calendar.YEAR);
 		month = month + "  "+ year;
 		tv.setText(month);
+		tv.setTextColor(Color.BLACK);
+		setUpDayView();
 		setUpCalendar(cal);
 	}
 
+	private void setUpDayView() {
+		GridView dayView = (GridView) findViewById(R.id.calDayGridView);
+		GridViewDayOfWeekAdapter dayViewAdapter = new GridViewDayOfWeekAdapter(this);
+		dayView.setAdapter(dayViewAdapter);
+		dayView.setGravity(Gravity.CENTER);
+	}
     private void setUpCalendar(Calendar cal) {
 		GridView calView = (GridView) findViewById(R.id.calGridView);
 		GridViewDayAdapter calViewAdapter = new GridViewDayAdapter(this,cal.getTime(),_db);
