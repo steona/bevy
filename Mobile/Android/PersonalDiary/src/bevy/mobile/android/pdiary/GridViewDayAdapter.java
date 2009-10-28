@@ -22,6 +22,7 @@ package bevy.mobile.android.pdiary;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import android.content.Context;
@@ -48,7 +49,8 @@ public class GridViewDayAdapter extends BaseAdapter implements ListAdapter {
     private List<String> _daysHavingEvents;
     SimpleDateFormat _sdf = new SimpleDateFormat();
     private String dateStr = "";
-    
+	public static int days_in_month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30,
+		31, 30, 31 };
     
     public GridViewDayAdapter(Context c, Date date, PersonalDiaryDB db) {
 	_context = c;
@@ -77,7 +79,8 @@ public class GridViewDayAdapter extends BaseAdapter implements ListAdapter {
 
     @Override
     public int getCount() {
-	return _cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+    	return getTotalDaysCount(_cal);
+	//return _cal.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
     @Override
@@ -115,11 +118,19 @@ public class GridViewDayAdapter extends BaseAdapter implements ListAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
 	TextView tv;
-	position = position + 1;
+	
+	Calendar cal = new GregorianCalendar(_cal.get(Calendar.YEAR), _cal.get(Calendar.MONTH), 1);
+	int firstDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+	
+	position = (position + 1) - (firstDayOfWeek - 1);
 	if (convertView == null) {
 	    tv = new TextView(_context);
 	    tv.setGravity(Gravity.CENTER);
-	    tv.setText(position + "");
+	    if (position < 1) {
+	    	tv.setText("" + "");
+	    } else {
+	    	tv.setText(position + "");
+	    }
 	} else {
 	    tv = (TextView) convertView;
 	}
@@ -132,6 +143,13 @@ public class GridViewDayAdapter extends BaseAdapter implements ListAdapter {
 	tv.setMinLines(3);
 	tv.setGravity(Gravity.CENTER);
 	return tv;
+    }
+
+    private int getTotalDaysCount(Calendar cal) {
+    	Calendar calForDayOne = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), 1);
+    	int days = days_in_month[cal.get(Calendar.MONTH)];
+    	int firstDayOfWeek = calForDayOne.get(Calendar.DAY_OF_WEEK);
+    	return (days + (firstDayOfWeek -1)); 
     }
 
     private boolean dayHasEvents(int position) {
