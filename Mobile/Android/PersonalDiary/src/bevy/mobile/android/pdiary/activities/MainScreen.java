@@ -41,10 +41,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 import bevy.mobile.android.pdiary.GridViewDayAdapter;
 import bevy.mobile.android.pdiary.GridViewDayNotesAdapter;
 import bevy.mobile.android.pdiary.GridViewDayOfWeekAdapter;
@@ -86,6 +86,7 @@ public class MainScreen extends Activity implements AdapterView.OnItemClickListe
     
     Map<Long,Integer> idMap = new HashMap<Long,Integer>();
     int selectedItem = -1;
+    GridView calView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +138,7 @@ public class MainScreen extends Activity implements AdapterView.OnItemClickListe
 		dayView.setGravity(Gravity.CENTER);
 	}
     private void setUpCalendar(Calendar cal) {
-		GridView calView = (GridView) findViewById(R.id.calGridView);
+		calView = (GridView) findViewById(R.id.calGridView);
 		GridViewDayAdapter calViewAdapter = new GridViewDayAdapter(this,cal.getTime(),_db);
 		calView.setAdapter(calViewAdapter);
 		calView.setClickable(true);
@@ -190,6 +191,7 @@ public class MainScreen extends Activity implements AdapterView.OnItemClickListe
         }
         _db = new PersonalDiaryDB(this);
         showContent(_cal);
+        showNotesContent(currentSelectedDateString);
     }
     
     @Override
@@ -214,76 +216,10 @@ public class MainScreen extends Activity implements AdapterView.OnItemClickListe
     	
 		Date date = null;
 		currentSelectedDateString=dateString;
-		try{
-		date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
-		}catch(ParseException pex){
-			System.out.println(pex.getMessage());
-		}
-		
-		
-		List<DiaryEntry> entriesList = _db.getEntriesForDay(date);
-		Iterator<DiaryEntry> itr = entriesList.iterator();
-		Map<Integer,String> notesMap = new HashMap<Integer,String>();
-		while(itr.hasNext()){
-			DiaryEntry entry = itr.next();
-			
-			notesMap.put(entry.getId(),entry.getTitle());
-		}
-
-		Set<Integer> keyList = notesMap.keySet();
-		Collection<String> titleColl = notesMap.values();
-		List<String> titleList = new ArrayList<String>(titleColl);
-		String[] notes = new String[titleList.size()];
-		notes = titleList.toArray(notes);
-		
-		idMap.clear();
-		Iterator<Integer> it = keyList.iterator();
-		long value = 0;
-		while(it.hasNext()){
-			idMap.put(value++, it.next());
-		}
-		GridView notesView = (GridView) findViewById(R.id.notesGridView);
-		final Context c = this;
-		GridViewDayNotesAdapter notesAdapter = new GridViewDayNotesAdapter(c,notesMap, idMap);
-		notesView.setOnItemClickListener(new OnItemClickListener(){
-			
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
-				if(position%2 == 0){
-					Intent i = new Intent(c, NoteViewActivity.class);
-					int pos = position/2;
-					long l = new Long(pos+"").longValue();
-					int val = idMap.get(l);
-					i.putExtra("id", val);
-					c.startActivity(i);
-				}else{
-					int pos = position/2;
-					long l = new Long(pos+"").longValue();
-					long idToDelete = idMap.get(l);
-					_db.deleteNote(idToDelete);
-					showContent(_cal);
-					showNotesContent(currentSelectedDateString);
-				}
-			}
-
-		});
-
-		if(notes != null && notes.length > 0){
-			
-			notesView.setAdapter(notesAdapter);
-			notesView.setClickable(true);
-		  		  
-		}else{
-			Intent i = new Intent(this,NoteEditActivity.class);
-			i.putExtra("date", dateString);
-			this.startActivity(i);
-//			notes = new String[1];
-//			notes[0] = "No notes present";
-//			notesView.setAdapter(new ArrayAdapter<String>(this,
-//			      android.R.layout.simple_list_item_1, notes));
-//			notesView.setTextFilterEnabled(true);
-//			showContent(_cal);
+		if(currentSelectedDateString != null && !currentSelectedDateString.equals("")){
+			GridView notesView = (GridView) findViewById(R.id.notesGridView);
+			final Context c = this;
+			GridViewDayNotesAdapter notesAdapter = new GridViewDayNotesAdapter(c,dateString, _db, notesView, calView);
 		}
     }
 
