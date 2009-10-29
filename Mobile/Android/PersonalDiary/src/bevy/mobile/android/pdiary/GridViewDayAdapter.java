@@ -63,20 +63,6 @@ public class GridViewDayAdapter extends BaseAdapter implements ListAdapter {
 	Log.d("PDIARY", "Days having events : " + _daysHavingEvents);
     }
 
-    
-
-    @Override
-    public boolean areAllItemsEnabled() {
-	// TODO Auto-generated method stub
-	return false;
-    }
-
-    @Override
-    public boolean isEnabled(int position) {
-	// TODO Auto-generated method stub
-	return false;
-    }
-
     @Override
     public int getCount() {
     	return getTotalDaysCount(_cal);
@@ -91,12 +77,6 @@ public class GridViewDayAdapter extends BaseAdapter implements ListAdapter {
 
     @Override
     public long getItemId(int position) {
-	// TODO Auto-generated method stub
-	return 0;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
 	// TODO Auto-generated method stub
 	return 0;
     }
@@ -163,27 +143,5 @@ public class GridViewDayAdapter extends BaseAdapter implements ListAdapter {
 	}
     }
 
-    @Override
-    public boolean hasStableIds() {
-	// TODO Auto-generated method stub
-	return false;
-    }
-
-    @Override
-    public boolean isEmpty() {
-	// TODO Auto-generated method stub
-	return false;
-    }
-
-    @Override
-    public void registerDataSetObserver(DataSetObserver observer) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void unregisterDataSetObserver(DataSetObserver observer) {
-	// TODO Auto-generated method stub
-    }
 
 }
