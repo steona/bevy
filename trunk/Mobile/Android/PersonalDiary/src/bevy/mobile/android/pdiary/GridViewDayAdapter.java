@@ -128,6 +128,9 @@ public class GridViewDayAdapter extends BaseAdapter implements ListAdapter {
     private int getTotalDaysCount(Calendar cal) {
     	Calendar calForDayOne = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), 1);
     	int days = days_in_month[cal.get(Calendar.MONTH)];
+    	if(cal.get(Calendar.YEAR)%4==0 && cal.get(Calendar.MONTH)==1){
+    		days = 29;
+    	}
     	int firstDayOfWeek = calForDayOne.get(Calendar.DAY_OF_WEEK);
     	return (days + (firstDayOfWeek -1)); 
     }
