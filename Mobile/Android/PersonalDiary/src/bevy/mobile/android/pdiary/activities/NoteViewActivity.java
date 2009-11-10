@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -96,6 +97,9 @@ public class NoteViewActivity extends Activity {
 		mCreatedDateValue = (TextView) findViewById(R.id.createdvalue);
 		mLastModifiedValue = (TextView) findViewById(R.id.lastmodifiedvalue);
 		
+		Typeface face = Typeface.createFromAsset(getAssets(), "fonts/verdana.ttf");
+		mBodyValue.setTypeface(face);
+		
 		Bundle extras = getIntent().getExtras();
 		if(extras != null){
 			id = extras.getInt("id");
@@ -115,6 +119,9 @@ public class NoteViewActivity extends Activity {
 				}
 				if(body != null){
 					mBodyValue.setText(body);
+					mBodyValue.setTextSize(12);
+					//mBodyValue.setLineSpacing(0.5f, 1);
+					
 				}
 				if(lastModified != null){
 					mLastModifiedValue.setText(lastModified);

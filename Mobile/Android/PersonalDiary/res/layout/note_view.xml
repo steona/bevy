@@ -1,30 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:orientation="vertical">
+  android:layout_width="320dip"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  android:background="@color/white"
+  android:layout_alignParentTop="true"
+  android:layout_centerInParent="true"
+  >
 
 	<LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal">
+		android:orientation="horizontal"
+		>
 		  
 		<TextView 
-			android:text="Title:  " 
-			android:id="@+id/title" 
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content" 
-			android:textColor="#00FF00">
-		</TextView>
-		
-		<TextView 
-			android:text="" 
+			android:textStyle="bold" 
+			android:textSize="20dip"
 			android:id="@+id/titlevalue" 
 			android:layout_width="wrap_content" 
 			android:layout_height="wrap_content"
-			android:textColor="#FFFFFF"
+			android:textColor="#000000"
 			>
 		</TextView>
 	</LinearLayout>
@@ -33,71 +31,68 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal">
+		android:orientation="horizontal"
+		>
 
 		<TextView 
-			android:text="Created Date:  " 
+			android:textSize="10dip"
+			android:textStyle="bold"
+			android:text="Created: " 
 			android:id="@+id/created" 
 			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content" android:textColor="#00FF00">
+			android:layout_height="wrap_content" 
+			android:textColor="#000000">
 		</TextView>
 		
 		<TextView 
-			android:text="" 
+			android:textSize="10dip"
 			android:id="@+id/createdvalue" 
 			android:layout_width="wrap_content" 
 			android:layout_height="wrap_content"
-			android:textColor="#FFFFFF"			 
+			android:textColor="#000000"
 			>
 		</TextView>
-
-	</LinearLayout>
-
+		</LinearLayout>
+		
 	<LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal">
-		
-		<TextView 
-			android:text="Last Modified:  " 
+		android:orientation="horizontal"
+		>
+		<TextView
+			android:textSize="10dip" 
+			android:textStyle="bold"
+			android:text="Last Modified: " 
 			android:id="@+id/lastmodified" 
 			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content" android:textColor="#00FF00">
+			android:layout_height="wrap_content" 
+			android:textColor="#000000"
+			>
 		</TextView>
 		
 		<TextView 
-			android:text="" 
+			android:textSize="10dip"
 			android:id="@+id/lastmodifiedvalue" 
 			android:layout_width="wrap_content" 
 			android:layout_height="wrap_content"
-			android:textColor="#FFFFFF"			 
+			android:textColor="#000000"
 			>
 		</TextView>
 	</LinearLayout>
 
-	<LinearLayout
+	<ScrollView 
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal">
+		android:orientation="horizontal"
+		android:layout_marginTop="10dip"
+		> 
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" 
-			android:text="Body: " android:textColor="#00FF00"/>
-
-	</LinearLayout>
-	
-	<LinearLayout
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal">
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" 
-			android:text=""
 			android:id="@+id/bodyvalue"
-			android:textColor="#FFFFFF"			
+			android:textColor="#000000"
 			/>
 
-	</LinearLayout>
+	</ScrollView>
 </LinearLayout>
