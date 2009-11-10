@@ -41,11 +41,8 @@ Developed by : Sandeep Soni [ http://sonisandeep.blogspot.com,
     <string name="menu_about">About PDiary</string>
     <string name="menu_email">Mail Note</string>
     <string name="title">Title</string>
-    <string name="repeat">Repeat Every</string>
-    <string name="repeat_until">Repeat Until</string>
     <string name="body">Body</string>
     <string name="save">Save</string>
-    <string name="days">Days</string>
     <string name="cancel">Cancel</string>
     <string name="date">Date</string>
     <string name="pickDate">Choose Date</string>
