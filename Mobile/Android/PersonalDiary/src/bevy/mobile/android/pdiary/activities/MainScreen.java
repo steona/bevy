@@ -229,9 +229,11 @@ public class MainScreen extends Activity implements AdapterView.OnItemClickListe
 		TextView textView = (TextView)v;
 		String date = Utils.getStringFromDate(_cal.getTime());
 		int position = new Integer(textView.getText().toString()).intValue();
+		if (position > 0) {
 		String dateStr = date.replaceFirst("[0-9]{2}$", String.format("%02d",position));
 		showContent(_cal);
 		showNotesContent(dateStr);
+		}
 	}
 
 }
