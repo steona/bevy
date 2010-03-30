@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="390" height="130" styleName="weatherInfo">
+	
+	<mx:VBox>
+		<mx:Label text="Weather" styleName="blueLabel" />	
+		<mx:HBox>
+			<mx:VBox width="185">
+				<mx:Label text="" id="s_addr" styleName="blackLabel" truncateToFit="true" maxWidth="135" />	
+				<mx:HBox>
+					<mx:HBox width="50" height="40" paddingLeft="10">
+						<mx:Image id="s_image"    />
+					</mx:HBox>
+					<mx:HBox styleName="textNormal">
+						<mx:Text width="100%" height="100%" id="s_condition" />
+					</mx:HBox>
+				</mx:HBox>
+			</mx:VBox>
+			<mx:VBox>
+				<mx:Label text="" id="d_addr" styleName="blackLabel" truncateToFit="true" maxWidth="135" />	
+				<mx:HBox>
+					<mx:HBox width="50" height="40" paddingLeft="10">
+						<mx:Image id="d_image"    />
+					</mx:HBox>
+					<mx:HBox styleName="textNormal">
+						<mx:Text width="100%" height="100%" id="d_condition" />
+					</mx:HBox>
+				</mx:HBox>			
+			</mx:VBox>
+		</mx:HBox>
+	</mx:VBox>
+	
+</mx:HBox>

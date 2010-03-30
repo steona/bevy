@@ -1,0 +1,104 @@
+package components
+{	
+	import com.yahoo.maps.api.core.location.Address;
+	import com.yahoo.maps.webservices.geocoder.GeocoderResult;
+	import com.yahoo.maps.webservices.geocoder.events.GeocoderEvent;
+	import com.yahoo.webapis.weather.Weather;
+	import com.yahoo.webapis.weather.WeatherService;
+	import com.yahoo.webapis.weather.events.WeatherResultEvent;
+	
+	import mx.controls.Alert;
+	import mx.controls.Image;
+	import mx.controls.Label;
+	
+	public class WeatherDisplay
+	{		
+		private var _weatherService:WeatherService;
+		private var _weather:Weather;		
+		
+		public var startcityName:Label;
+		public var weatherImg:Image;
+		public var weatherDisplay:Label;
+		
+		public var endCityName:Label;
+		public var endWeatherImg:Image;
+		public var endWeatherDisplay:Label;
+		
+		
+		public var _start:String;
+		public var _end:String;
+		
+		
+		public function WeatherDisplay()
+		{
+			init();
+		}
+		
+		
+		public function init():void
+		{
+			// initialize a new WeatherService object and listen for its WEATHER_LOADED event.
+			
+			_weatherService = new WeatherService();		
+			_weatherService.addEventListener(WeatherResultEvent.WEATHER_LOADED, handleWeatherLoaded);
+			
+				
+		}
+		
+		public function getWeather_t(start:String, end:String):void 
+		{
+			_start = start;
+			_end = end;
+			 
+			 
+			 var cities:Array = [_start,_end];
+			 
+			 for(var i:int=0; i<2 ; i++)
+			 {
+			 	var address:Address = new Address(cities[i]);
+			 	address.addEventListener(GeocoderEvent.GEOCODER_SUCCESS, handleGeocodeSuccess);					
+				address.geocode();
+			 }
+		}
+
+		private function handleGeocodeSuccess(event:GeocoderEvent):void 
+		{
+				Alert.show("Here");
+				var address:Address = (event.target as Address);
+				Alert.show(""+address.address);
+				var result:GeocoderResult = address.geocoderResultSet.firstResult;
+				Alert.show(result.city);
+				
+				_weatherService.getWeather( result.uzip, "f" );		
+						
+					
+		}
+			
+		private function handleGeocodeFailure(event:GeocoderEvent):void
+		{
+			Alert.show("failure");
+		}
+		
+		private function handleWeatherLoaded(event:WeatherResultEvent):void
+		{
+				
+				_weather = _weatherService.weather;				
+			
+				
+					startcityName.text=_weather.location.city ;
+					weatherImg.load(_weather.current.imageURL);
+					weatherDisplay.text=_weather.current.description + ", " + _weather.current.temperature +"  F";
+					
+					
+				
+			//	endCityName.text=_weather.location.city ;
+			//		endWeatherImg.load(_weather.current.imageURL);
+			//		endWeatherDisplay.text = _weather.current.description +", " + _weather.current.temperature + " F";
+		
+			
+		}	
+		
+		
+
+	}
+}

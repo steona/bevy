@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="300" height="400">
+	
+<mx:UIComponent id="mapContainer" width="100%" height="100%"/>	
+	
+<mx:VBox>
+<mx:CheckBox id="motelsCB" label="Motels" click="showpoi()"/>
+<mx:CheckBox id="hotelsCB" label="Hotels" click="showpoi()"/>
+<mx:CheckBox id="hospitalsCB" label="Hospitals" click="showpoi()"/>
+<mx:CheckBox id="gasstationsCB" label="Gas Stations" click="showpoi()"/>
+<mx:CheckBox id="starbucksCB" label="Starbucks" click="showpoi()"/>
+<mx:CheckBox id="shoppingmallsCB" label="Shopping Malls" click="showpoi()"/>
+<mx:CheckBox id="theatresCB" label="Theatres" click="showpoi()"/>
+<mx:CheckBox id="parksCB" label="Parks" click="showpoi()"/>
+<mx:CheckBox id="restaurantsCB" label="Restaurants" click="showpoi()"/>
+<mx:CheckBox id="airportsCB" label="Airports" click="showpoi()"/>
+<mx:CheckBox id="nightclubsCB" label="Night Clubs" click="showpoi()"/>
+<mx:CheckBox id="festiveCB" label="Festivals and Events" click="showpoi()"/>
+<mx:CheckBox id="carrentalsCB" label="Car Rentals" click="showpoi()"/>
+<mx:CheckBox id="winearyCB" label="Wineary" click="showpoi()"/>
+<mx:CheckBox id="schoolsunivCB" label="Schools and Universities" click="showpoi()"/>
+
+
+</mx:VBox>
+	
+	<mx:Script>
+		<![CDATA[
+			
+			import components.PointOfInterests;
+			
+			var myPoints:PointOfInterests= new PointOfInterests();
+			
+			public function showpoi():void
+			{
+				myPoints.showpoi();
+			}
+		]]>
+	</mx:Script>
+</mx:Panel>

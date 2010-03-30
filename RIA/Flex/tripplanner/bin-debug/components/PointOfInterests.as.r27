@@ -1,0 +1,81 @@
+package components
+{	
+		import com.google.maps.Color;
+		import com.google.maps.LatLng;
+		import com.google.maps.overlays.Marker;
+		import com.google.maps.overlays.MarkerOptions;
+		import com.yahoo.maps.api.YahooMap;
+		import com.yahoo.maps.api.YahooMapEvent;
+		import com.yahoo.maps.api.core.location.LatLon;
+		import com.yahoo.maps.api.markers.SearchMarker;
+		import com.yahoo.maps.webservices.local.LocalSearch;
+		import com.yahoo.maps.webservices.local.LocalSearchItem;
+		import com.yahoo.maps.webservices.local.LocalSearchResults;
+		import com.yahoo.maps.webservices.local.events.LocalSearchEvent;
+		
+		import mx.controls.Alert;
+		import mx.core.Application;
+		import mx.core.UIComponent;
+		
+		import views.pointsOfInterest;
+	
+	public class PointOfInterests
+	{
+		public function PointOfInterests()
+		{
+		}
+
+
+       private var _localSearch:LocalSearch;	
+	
+		
+		private var _yahooMap:YahooMap;
+		public var mapContainer:UIComponent;
+		public function showpoi():void
+		{
+			var v:pointsOfInterest = new pointsOfInterest();
+			//Alert.show("Abc");
+			//Alert.show(mapContainer.width.toString());
+			var appid:String="6RoQCIjV34GZdMkdsn.tq5tk4__oJEK.1L0I9ikpJkAWCyqbd0XQuF4Q0h0EJLQF";
+			//var mapc:pointsOfInterest =new pointsOfInterest();
+			//var appid:String = "eU3vmoTV34Ec9T6DGRnZAsuoUjddNdsKtfQC84KkQ0v87vFLJliNY8S6eA3AU5vBHA";
+		    _yahooMap = new YahooMap();
+			_yahooMap.addEventListener(YahooMapEvent.MAP_INITIALIZE, handleMapInitialize);
+			_yahooMap.init(appid, mapContainer.width,mapContainer.height);
+			
+		}
+			
+private function handleMapInitialize(event:YahooMapEvent):void  
+{
+		   _yahooMap.centerLatLon = new LatLon(37.779160,-122.420049); // setting the center latlon over san francisco,ca
+		_localSearch = new LocalSearch();
+		
+		_localSearch.addEventListener(LocalSearchEvent.SEARCH_SUCCESS,handleSearchSuccess);
+		_localSearch.searchLocal("Starbucks",5,_yahooMap.centerLatLon,25, 1, 25,"96926236");
+		
+		}
+		
+		 private function handleSearchSuccess(event:LocalSearchEvent):void 
+        {
+            var searchResults:LocalSearchResults= event.data as LocalSearchResults;
+            var results:Array=searchResults.results;
+            var len:int=results.length;
+            //Alert.show(len.toString());
+            var startMarker:Marker;
+            var lat:Number;
+            var lon:Number;
+            for(var i:int=0; i<len; i++) 
+            {
+            	
+                var item:LocalSearchItem= results[i];
+               // Alert.show(item.addr);
+                var marker:SearchMarker = new SearchMarker(item);
+                lat = item.lat;
+                lon = item.lon;
+              	startMarker = new Marker(new LatLng(lat, lon), new MarkerOptions({fillStyle: {color:Color.GREEN}}));
+              	Application.application.map.addOverlay(startMarker);
+            } 
+		
+		}
+	}
+}
