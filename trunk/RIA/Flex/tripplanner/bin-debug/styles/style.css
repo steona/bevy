@@ -1,0 +1,41 @@
+/* CSS file */
+.app{
+	background-color: #FFFFFF;
+}
+.lableText{
+	color: #565656;
+	font-weight:bold;
+	font-size:10;
+}
+.textBox{
+	corner-radius:5;
+	border-color:#23A4FF;
+	color:#4B4B4B;
+}
+.addressForm{
+	border-style:solid;
+	border-thickness:1;
+	border-color:#e3e3e3;
+}
+.weatherInfo{
+	border-style:solid;
+	border-thickness:1;
+	border-color:#e3e3e3;
+}
+.blackLabel{
+	color:#373737;
+	fontWeight: bold;
+	fontSize:13;
+}
+.blueLabel{
+	color:#46bdf7;
+	fontWeight: bold;
+	fontSize:13;
+	fontFamily: "Verdana";	
+}
+.textNormal{
+	fontSize:12;
+	fontFamily: "Verdana";
+}
+
+	

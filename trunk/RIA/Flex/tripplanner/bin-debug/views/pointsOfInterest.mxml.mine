@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="300" height="400">
+	
+<mx:UIComponent id="mapContainer" width="100%" height="100%"/>	
+	
+	<mx:Script>
+		<![CDATA[
+			
+			import components.PointOfInterests;
+			
+			var myPoints:PointOfInterests= new PointOfInterests();
+			public var mylabel:String="";
+		//	var ctr:Boolean= true;	
+			public var id_poi:String;
+			
+			public function showpoi():void
+			{
+				id_poi="";
+				
+				if(motelsCB.selected== true )		
+					{	id_poi="motels" ;
+		//				ctr=false;
+					}
+												 		
+					if(hotelsCB.selected== true)		
+						id_poi="hotels" ;
+			
+
+				if(hospitalsCB.selected==true)
+					id_poi="hospitals";
+				
+				if(gasstationsCB.selected==true)
+						id_poi="gas stations";
+				
+				
+				if(starbucksCB.selected==true)
+						id_poi="starbucks";
+						
+				if(shoppingmallsCB.selected==true)
+					id_poi="shopping malls";
+					
+				if(theatresCB.selected==true)
+				id_poi="theaters";
+				
+				if(parksCB.selected==true)
+				id_poi="parks";
+				
+				if(restaurantsCB.selected==true)
+				id_poi="restaurants";
+				
+				if(airportsCB.selected==true)
+				id_poi="airports";
+				
+				if(nightclubsCB.selected==true)
+				id_poi="night clubs";
+				
+				if(festiveCB.selected==true)
+				id_poi="events";
+				
+				if(carrentalsCB.selected==true)
+				id_poi="car rentals";
+				
+				if(winearyCB.selected==true)
+				id_poi="wineary";
+				
+				if(schoolsunivCB.selected==true)
+				id_poi="schools";
+				
+				if(banksCB.selected==true)
+					id_poi="banks";
+				
+				
+			myPoints.showpoints(id_poi);		
+
+			}
+		]]>
+	</mx:Script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<mx:VBox>
+<mx:CheckBox id="motelsCB" label="Motels" click="showpoi()"/>
+<mx:CheckBox id="hotelsCB" label="Hotels" click="showpoi()"/>
+<mx:CheckBox id="hospitalsCB" label="Hospitals" click="showpoi()"/>
+<mx:CheckBox id="gasstationsCB" label="Gas Stations" click="showpoi()"/>
+<mx:CheckBox id="starbucksCB" label="Starbucks" click="showpoi()"/>
+<mx:CheckBox id="shoppingmallsCB" label="Shopping Malls" click="showpoi()"/>
+<mx:CheckBox id="theatresCB" label="Theatres" click="showpoi()"/>
+<mx:CheckBox id="parksCB" label="Parks" click="showpoi()"/>
+<mx:CheckBox id="restaurantsCB" label="Restaurants" click="showpoi()"/>
+<mx:CheckBox id="airportsCB" label="Airports" click="showpoi()"/>
+<mx:CheckBox id="nightclubsCB" label="Night Clubs" click="showpoi()"/>
+<mx:CheckBox id="festiveCB" label="Festivals and Events" click="showpoi()"/>
+<mx:CheckBox id="carrentalsCB" label="Car Rentals" click="showpoi()"/>
+<mx:CheckBox id="winearyCB" label="Wineary" click="showpoi()"/>
+<mx:CheckBox id="schoolsunivCB" label="Schools and Universities" click="showpoi()"/>
+<mx:CheckBox id="banksCB" label="Banks" click="showpoi()"/>
+</mx:VBox>
+	
+	
+</mx:Panel>

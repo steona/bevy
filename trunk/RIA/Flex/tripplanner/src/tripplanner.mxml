@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:maps="com.google.maps.*" xmlns:comp="components.*" xmlns:view="views.*"
+	layout="horizontal" 	
+	height="700" width="1200"
+	creationComplete="initApp()"
+	horizontalScrollPolicy="off"
+	verticalScrollPolicy="off"
+	backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]">
+<mx:Style source="./styles/style.css" />
+<mx:VBox>
+<mx:HBox horizontalAlign="left">
+	<mx:HBox width="370" height="130" styleName="addressForm" >
+		<view:AddressForm />
+	</mx:HBox>
+	<view:WeatherView id="weatherId" />
+	<view:TrafficView id="trafficId" />
+</mx:HBox>
+
+<mx:HBox>
+	<view:pointsOfInterest/>
+	<mx:VBox top="250" left="300" paddingLeft="3">
+		<mx:Panel width="600" height="500" title="Map" >
+			<maps:Map id="map" 	
+				key="ABQIAAAAp_jQTO7dItCXQGEEUiLjrRTu1L9eVJVrzHAjJZXl4ntYIV5XABR2CxoWujoiuEkB14d_rBnYA4xxDw"
+				mapevent_mapready="onMapReady(event)" 
+	      		width="200%" height="100%" />     
+		</mx:Panel>
+	</mx:VBox>
+	<mx:HBox paddingLeft="3">
+		<mx:Panel title="Directions" id="directionpanel" backgroundColor="white" >
+		  	<mx:Text id="step" htmlText="{}" width="230 " height="460"/> 
+		</mx:Panel>
+	</mx:HBox> 
+</mx:HBox>         
+
+<mx:UIComponent id="mapContainer" width="100%" height="100%"/>
+
+</mx:VBox>	
+ 	
+<mx:Script>
+	<![CDATA[
+		import views.AddressForm;
+		import constants.AppConstants;
+		
+		import mx.states.SetStyle;	
+		
+		import com.google.maps.LatLng;
+		import com.google.maps.controls.ZoomControl;
+		
+		/**
+		 * Init method after application initialized
+		 */
+		 
+		private function initApp():void{
+			this.setStyle('styleName', 'app');
+	   	}
+	   	
+		/**
+		 * Start map
+		 */ 
+		private function onMapReady(event:Event):void{
+		
+			map.enableScrollWheelZoom();
+			map.enableContinuousZoom();
+			map.setCenter(new LatLng(37.320052,-121.877636), 5);
+			map.addControl(new ZoomControl);
+			map.enableDragging();
+		}
+		
+	]]>
+</mx:Script>	
+</mx:Application>

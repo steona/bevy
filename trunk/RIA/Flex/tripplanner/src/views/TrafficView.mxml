@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="130" styleName="weatherInfo">
+	
+	<mx:VBox>
+		<mx:Label text="Traffic" styleName="blueLabel" />
+		<mx:HBox>
+		<mx:VBox id="sourcetrafficdetails" label="Source" verticalScrollPolicy="auto" styleName="textNormal">		
+		</mx:VBox>			
+		</mx:HBox>			
+		<mx:HBox>
+		<mx:VBox id="destrafficdetails" label="Destination" verticalScrollPolicy="auto" styleName="textNormal">		
+		</mx:VBox>
+		</mx:HBox>		
+	</mx:VBox>
+
+
+</mx:HBox>	

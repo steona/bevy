@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"  title="Trip Planner" width="700" height="25%" 
+	paddingTop="10" paddingLeft="10" paddingRight="10" paddingBottom="10">
+ <mx:HBox>
+ <mx:Form>
+	 <mx:FormHeading id="intial_view_trip_planner"/>
+	 <mx:FormItem label="Start Address">
+	 	<mx:TextInput id="start_addr"/>	 	
+	 </mx:FormItem>
+	 	
+	 <mx:FormItem label="Destination Address">
+	 	<mx:TextInput id="dest_addr"/>	 	
+	 </mx:FormItem>
+	<!-- searchhandler(event)" source_addr to des_addr -->
+	<mx:FormItem>
+	<mx:Button id="srch_button" label="Search"
+		click="initApp(event,start_addr,dest_addr)"   
+		/> 
+	</mx:FormItem>
+</mx:Form>
+
+	<mx:VBox>
+	<mx:Label id="startcityName" text="" fontWeight="bold">		
+	</mx:Label>
+	<mx:HBox>
+	<mx:Image  id="startweatherImg" >		
+	</mx:Image>
+	<mx:VBox>
+		<mx:Label text="Current Condition:" textAlign="left">
+		</mx:Label>
+		<mx:Label id="startweatherDisplay" text="">			
+		</mx:Label>
+	</mx:VBox>		
+	</mx:HBox>
+	
+	<mx:Label id="endcityName" text="" fontWeight="bold">		
+	</mx:Label>
+	<mx:HBox>
+	<mx:Image  id="endweatherImg" >		
+	</mx:Image>
+	<mx:VBox>
+		<mx:Label text="Current Condition:" textAlign="left">
+		</mx:Label>
+		<mx:Label id="endweatherDisplay" text="">			
+		</mx:Label>
+	</mx:VBox>		
+	</mx:HBox>
+	</mx:VBox>
+
+</mx:HBox>
+	<mx:Script>
+		<![CDATA[
+			import components.WeatherDisplay;
+			
+		import components.GoogleMap;
+		import views.weatherView;
+		import mx.controls.Alert;
+				
+		private var myMap:GoogleMap = new GoogleMap();
+		private var myWeather:WeatherDisplay = new WeatherDisplay();
+		
+		
+		
+		public function initApp(event:Event,start_addr:TextInput,desti_addr:TextInput):void
+		{
+			//private var myWeather:WeatherDisplay = new WeatherDisplay();
+			
+			var source_addr:String=start_addr.text;
+			var dest_addr:String=desti_addr.text;
+			
+			myWeather.cityName = startcityName;
+			myWeather.weatherDisplay = startweatherDisplay;
+			myWeather.weatherImg = startweatherImg;
+				
+			myWeather.endCityName = endcityName;
+			myWeather.endWeatherDisplay = endweatherDisplay;
+			myWeather.endWeatherImg = endweatherImg;
+				
+			
+			myMap.getdirections(source_addr,dest_addr);
+			myWeather.getWeather(source_addr,dest_addr);
+			
+			
+		}
+		]]>
+	</mx:Script>
+	
+	    
+</mx:Panel>
+
+
+

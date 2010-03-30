@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Form xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Script>
+		<![CDATA[
+			import components.TripPlannerApp;
+			import components.Weather;
+			import components.GoogleMap;
+			import components.Traffic;
+			
+			private var myMap:GoogleMap = new GoogleMap();
+			
+			private function updateApplication():void{
+				TripPlannerApp.sourceAddr = start_addr.text; 
+				TripPlannerApp.destAddr = dest_addr.text;
+				//start weather update
+				var weather:Weather = new Weather();
+				weather.updateWeather();
+				
+				
+				//start map
+				myMap.getdirections(TripPlannerApp.sourceAddr, TripPlannerApp.destAddr);
+				
+				var traffic:Traffic = new Traffic();
+				traffic.getTrafficData();
+			} 
+
+		]]>
+	</mx:Script>
+	<mx:HBox>
+		<mx:VBox>
+			<mx:FormItem label="Start Address" styleName="lableText"/>
+			<mx:TextInput id="start_addr" styleName="textBox"/>	
+		</mx:VBox>
+		<mx:VBox>
+			<mx:FormItem label="Destination Address" styleName="lableText"/>
+			<mx:TextInput id="dest_addr" styleName="textBox"/>
+		</mx:VBox>
+	</mx:HBox>	
+	<mx:Button id="srch_button" label="Search" click="updateApplication()" />	 	
+</mx:Form>
+
